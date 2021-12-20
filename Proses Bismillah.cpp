@@ -82,5 +82,5 @@ int inputExit(int input){
 		system("pause");
 		Exit();
 	}
-	return input;
+	return input
 }

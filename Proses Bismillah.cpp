@@ -84,3 +84,22 @@ int inputExit(int input){
 	}
 	return input;
 }
+
+void Play(){
+	int input;
+	system("cls");
+	printf("\t\t\t\t\t\t ________________________________________________\n");
+	printf("\t\t\t\t\t\t|                Choose your enemy               |\n");
+	printf("\t\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t\t|    __________                  __________      |\n");
+	printf("\t\t\t\t\t\t|   |          |                |          |     |\n");
+	printf("\t\t\t\t\t\t|   |          |                |          |     |\n");
+	printf("\t\t\t\t\t\t|   | Computer |                |  1 vs 1  |     |\n");
+	printf("\t\t\t\t\t\t|   |          |                |          |     |\n");
+	printf("\t\t\t\t\t\t|   |__________|                |__________|     |\n");
+	printf("\t\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t\t|        1                            2          |\n");
+	printf("\t\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t\t|________________________________________________|\n");
+}

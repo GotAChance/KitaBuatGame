@@ -103,3 +103,11 @@ void Play(){
 	printf("\t\t\t\t\t\t|                                                |\n");
 	printf("\t\t\t\t\t\t|________________________________________________|\n");
 }
+
+int inputChooseYourEnemy(int input){
+	scanf("%d", &input);
+	if(input==1){
+		ChooseLevel();
+	}
+	return input;
+}

@@ -109,5 +109,8 @@ int inputChooseYourEnemy(int input){
 	if(input==1){
 		ChooseLevel();
 	}
+	if(input==2){
+		EnterYourName();
+	}
 	return input;
 }

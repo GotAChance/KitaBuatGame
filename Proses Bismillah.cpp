@@ -5,6 +5,8 @@ void tampilMenu();
 int inputMenu(int input);
 void kredit();
 void Exit();
+void ChooseYourEnemy();
+int inputChooseYourEnemy(int input);
 int inputExit(int input);
 
 int main(){

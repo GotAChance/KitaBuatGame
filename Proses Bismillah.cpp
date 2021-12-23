@@ -116,3 +116,55 @@ int inputChooseYourEnemy(int input){
 	}
 	return input;
 }
+
+void EnterYourName(){
+	int input
+	system("cls");
+	printf("\t\t\t\t\t ________________________________________________\n");
+	printf("\t\t\t\t\t|                 Enter Your Name                |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|   					           |\n");
+	printf("\t\t\t\t\t|  					           |\n");
+	printf("\t\t\t\t\t|  					           |\n");
+	printf("\t\t\t\t\t|  						   |\n");
+	printf("\t\t\t\t\t|  					           |\n");
+	printf("\t\t\t\t\t|      	=======================	           |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|________________________________________________|\n");
+	inputEnterYourName(input);
+}
+
+
+
+void ChooseLevel(){
+	int input;
+	system("cls");
+	printf("\t\t\t\t\t ________________________________________________\n");
+	printf("\t\t\t\t\t|                  Choose Level                  |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|   __________      __________     __________    |\n");
+	printf("\t\t\t\t\t|  |          |    |          |   |          |   |\n");
+	printf("\t\t\t\t\t|  |          |    |          |   |          |   |\n");
+	printf("\t\t\t\t\t|  |  3 x 3   |    |  5 x 5   |   |  6 x 6   |   |\n");
+	printf("\t\t\t\t\t|  |          |    |          |   |          |   |\n");
+	printf("\t\t\t\t\t|  |__________|    |__________|   |__________|   |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|       (1)            (2)             (3)       |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|                                                |\n");
+	printf("\t\t\t\t\t|________________________________________________|\n");
+	inputChooseLevel(input);
+}
+
+int inputChooseLevel(int input){
+	scanf("%d", &input);
+	switch (input){
+		case 1: Level1();break;
+		case 2: Level2();break;
+		case 3: Level3();break;
+	}
+	
+}

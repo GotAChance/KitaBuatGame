@@ -1,13 +1,27 @@
 #include <stdio.h>
 #include <windows.h>
+#include <string.h>
 
 void tampilMenu();
 int inputMenu(int input);
 void kredit();
 void Exit();
-void ChooseYourEnemy();
+void Play();
+void ChooseLevel();
+void EnterYourName();
+void EnterNamePlayer1();
+void EnterNamePlayer2();
+void Level1();
+void Level2();
+void Level3();
 int inputChooseYourEnemy(int input);
 int inputExit(int input);
+int inputChooseYourLevel(int input);
+
+typedef struct{
+	char nama[10];
+	int skor;
+}StatusPemain;
 
 int main(){
 	tampilMenu();
@@ -38,7 +52,7 @@ void tampilMenu(){
 int inputMenu(int input){
 	scanf("%d", &input);
 	switch (input){
-		case 1: printf("\nmantap");break;
+		case 1: Play();break;
 		case 2: printf("\njiwa");break;
 		case 3: kredit();break;
 		case 4: Exit();break;
@@ -90,53 +104,87 @@ int inputExit(int input){
 void Play(){
 	int input;
 	system("cls");
-	printf("\t\t\t\t\t\t ________________________________________________\n");
-	printf("\t\t\t\t\t\t|                Choose your enemy               |\n");
-	printf("\t\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t\t|    __________                  __________      |\n");
-	printf("\t\t\t\t\t\t|   |          |                |          |     |\n");
-	printf("\t\t\t\t\t\t|   |          |                |          |     |\n");
-	printf("\t\t\t\t\t\t|   | Computer |                |  1 vs 1  |     |\n");
-	printf("\t\t\t\t\t\t|   |          |                |          |     |\n");
-	printf("\t\t\t\t\t\t|   |__________|                |__________|     |\n");
-	printf("\t\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t\t|        1                            2          |\n");
-	printf("\t\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t\t|________________________________________________|\n");
+	printf("\t\t\t\t\t __________________________________________________\n");
+	printf("\t\t\t\t\t|                 Choose your enemy                |\n");
+	printf("\t\t\t\t\t|                                                  |\n");
+	printf("\t\t\t\t\t|      __________                  __________      |\n");
+	printf("\t\t\t\t\t|     |          |                |          |     |\n");
+	printf("\t\t\t\t\t|     |          |                |          |     |\n");
+	printf("\t\t\t\t\t|     | Computer |                |  1 vs 1  |     |\n");
+	printf("\t\t\t\t\t|     |          |                |          |     |\n");
+	printf("\t\t\t\t\t|     |__________|                |__________|     |\n");
+	printf("\t\t\t\t\t|                                                  |\n");
+	printf("\t\t\t\t\t|          1                            2          |\n");
+	printf("\t\t\t\t\t|                                                  |\n");
+	printf("\t\t\t\t\t|                                                  |\n");
+	printf("\t\t\t\t\t|__________________________________________________|\n");
+	inputChooseYourEnemy(input);
 }
 
 int inputChooseYourEnemy(int input){
 	scanf("%d", &input);
 	if(input==1){
-		ChooseLevel();
+		EnterYourName();
 	}
 	if(input==2){
-		EnterYourName();
+		EnterNamePlayer1();
 	}
 	return input;
 }
 
 void EnterYourName(){
-	int input
+	StatusPemain player;
+	int lenght;
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
 	printf("\t\t\t\t\t|                 Enter Your Name                |\n");
-	printf("\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t|   					           |\n");
-	printf("\t\t\t\t\t|  					           |\n");
-	printf("\t\t\t\t\t|  					           |\n");
-	printf("\t\t\t\t\t|  						   |\n");
-	printf("\t\t\t\t\t|  					           |\n");
-	printf("\t\t\t\t\t|      	=======================	           |\n");
-	printf("\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t|                                                |\n");
-	printf("\t\t\t\t\t|                                                |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
-	inputEnterYourName(input);
+	printf("\t\t\t\t\t                  (Maks 5 Huruf)                \n\t\t\t\t\t\t\t      ");
+	scanf("%s", &player.nama);
+	lenght=strlen(player.nama);
+	if (lenght>5){
+		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 5!\n");
+		system("pause");
+		EnterYourName();
+	}
+	ChooseLevel();
 }
 
+void EnterNamePlayer1(){
+	StatusPemain player1;
+	int lenght;
+	system("cls");
+	printf("\t\t\t\t\t ________________________________________________\n");
+	printf("\t\t\t\t\t|               Enter Name Player1               |\n");
+	printf("\t\t\t\t\t|________________________________________________|\n");
+	printf("\t\t\t\t\t                  (Maks 5 Huruf)                \n\t\t\t\t\t\t\t      ");
+	scanf("%s", &player1.nama);
+	lenght=strlen(player1.nama);
+	if (lenght>5){
+		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 5!\n");
+		system("pause");
+		EnterNamePlayer1();
+	}
+	EnterNamePlayer2();
+}
+
+void EnterNamePlayer2(){
+	StatusPemain player2;
+	int lenght;
+	system("cls");
+	printf("\t\t\t\t\t ________________________________________________\n");
+	printf("\t\t\t\t\t|               Enter Name Player2               |\n");
+	printf("\t\t\t\t\t|________________________________________________|\n");
+	printf("\t\t\t\t\t                  (Maks 5 Huruf)                \n\t\t\t\t\t\t\t      ");
+	scanf("%s", &player2.nama);
+	lenght=strlen(player2.nama);
+	if (lenght>5){
+		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 5!\n");
+		system("pause");
+		EnterNamePlayer2();
+	}
+	Level3();
+}
 
 
 void ChooseLevel(){
@@ -148,7 +196,7 @@ void ChooseLevel(){
 	printf("\t\t\t\t\t|   __________      __________     __________    |\n");
 	printf("\t\t\t\t\t|  |          |    |          |   |          |   |\n");
 	printf("\t\t\t\t\t|  |          |    |          |   |          |   |\n");
-	printf("\t\t\t\t\t|  |  3 x 3   |    |  5 x 5   |   |  6 x 6   |   |\n");
+	printf("\t\t\t\t\t|  |  3 x 3   |    |  6 x 6   |   |  7 x 7   |   |\n");
 	printf("\t\t\t\t\t|  |          |    |          |   |          |   |\n");
 	printf("\t\t\t\t\t|  |__________|    |__________|   |__________|   |\n");
 	printf("\t\t\t\t\t|                                                |\n");
@@ -156,15 +204,126 @@ void ChooseLevel(){
 	printf("\t\t\t\t\t|                                                |\n");
 	printf("\t\t\t\t\t|                                                |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
-	inputChooseLevel(input);
+	inputChooseYourLevel(input);
 }
 
-int inputChooseLevel(int input){
+int inputChooseYourLevel(int input){
 	scanf("%d", &input);
-	switch (input){
-		case 1: Level1();break;
-		case 2: Level2();break;
-		case 3: Level3();break;
+	switch(input){
+		case 1 :Level1(); break;
+		case 2 :Level2(); break;
+		case 3 :Level3(); break;
 	}
-	
+}
+
+void Level1(){
+	char papan[6][6];
+	int i,j;
+	for (i=0;i<6;i++){
+		for (j=0;j<6;j++){
+			papan[i][j]=' ';
+		}
+	}
+	system ("mode 100,43");
+	system("cls");
+	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
+	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
+    printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t\t      |     |     |     |\n");
+    printf("\t\t\t\t\t\t    1 |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2]);
+    printf("\t\t\t\t\t\t      |_____|_____|_____|\n");
+    printf("\t\t\t\t\t\t      |     |     |     |\n");
+    printf("\t\t\t\t\t\t    2 |  %c  |  %c  |  %c  | (Baris)\n", papan[1][0], papan[1][1], papan[1][2]);
+    printf("\t\t\t\t\t\t      |_____|_____|_____|\n");
+    printf("\t\t\t\t\t\t      |     |     |     |\n");
+    printf("\t\t\t\t\t\t    3 |  %c  |  %c  |  %c  |\n", papan[2][0], papan[2][1], papan[2][2]);
+    printf("\t\t\t\t\t\t      |     |     |     |\n");
+    printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t\t         1     2     3     \n\n");
+    printf("\t\t\t\t\t                    (Kolom)                 \n\n");
+    printf("\t\t\t\t\t            Masukan Huruf S atau O :\n");
+}
+
+void Level2(){
+	char papan[6][6];
+	int i,j;
+	for (i=0;i<6;i++){
+		for (j=0;j<6;j++){
+			papan[i][j]=' ';
+		}
+	}
+	system ("mode 100,43");
+	system("cls");
+	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
+	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
+    printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t   1 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4], papan[0][5]);
+    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t   2 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[1][0], papan[1][1], papan[1][2], papan[1][3], papan[1][4], papan[1][5]);
+    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t   3 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[2][0], papan[2][1], papan[2][2], papan[2][3], papan[2][4], papan[2][5]);
+    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t   4 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  | (Baris)\n", papan[3][0], papan[3][1], papan[3][2], papan[3][3], papan[3][4], papan[3][5]);
+    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t   5 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[4][0], papan[4][1], papan[4][2], papan[4][3], papan[4][4], papan[4][5]);
+    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t   6 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[5][0], papan[5][1], papan[5][2], papan[5][3], papan[5][4], papan[5][5]);
+    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t        1     2     3     4     5     6   \n\n");
+    printf("\t\t\t\t\t                    (Kolom)                 \n\n");
+    printf("\t\t\t\t\t            Masukan Huruf S atau O :\n");
+}
+
+
+void Level3(){
+	char papan[7][7];
+	int i,j;
+	for (i=0;i<7;i++){
+		for (j=0;j<7;j++){
+			papan[i][j]=' ';
+		}
+	}
+	system ("mode 100,43");
+	system("cls");
+	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
+	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
+    printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t1 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4], papan[0][5], papan[0][6]);
+    printf("\t\t\t\t\t  |_____|_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t2 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[1][0], papan[1][1], papan[1][2], papan[1][3], papan[1][4], papan[1][5], papan[1][6]);
+    printf("\t\t\t\t\t  |_____|_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t3 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[2][0], papan[2][1], papan[2][2], papan[2][3], papan[2][4], papan[2][5], papan[2][6]);
+    printf("\t\t\t\t\t  |_____|_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t4 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  | (Baris)\n", papan[3][0], papan[3][1], papan[3][2], papan[3][3], papan[3][4], papan[3][5], papan[3][6]);
+    printf("\t\t\t\t\t  |_____|_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t5 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[4][0], papan[4][1], papan[4][2], papan[4][3], papan[4][4], papan[4][5], papan[4][6]);
+    printf("\t\t\t\t\t  |_____|_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t6 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[5][0], papan[5][1], papan[5][2], papan[5][3], papan[5][4], papan[5][5], papan[5][6]);
+    printf("\t\t\t\t\t  |_____|_____|_____|_____|_____|_____|_____|\n");
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t7 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[6][0], papan[6][1], papan[6][2], papan[6][3], papan[6][4], papan[6][5], papan[6][6]);
+    printf("\t\t\t\t\t  |     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t     1     2     3     4     5     6     7\n\n");
+    printf("\t\t\t\t\t                    (Kolom)                 \n\n");
+    printf("\t\t\t\t\t            Masukan Huruf S atau O :\n");
 }

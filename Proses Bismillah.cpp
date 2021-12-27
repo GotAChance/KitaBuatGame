@@ -268,10 +268,10 @@ void Level2(){
     printf("\t\t\t\t\t   2 |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[1][0], papan[1][1], papan[1][2], papan[1][3], papan[1][4]);
     printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   3 |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[2][0], papan[2][1], papan[2][2], papan[2][3], papan[2][4]);
+    printf("\t\t\t\t\t   3 |  %c  |  %c  |  %c  |  %c  |  %c  |  (Baris)\n", papan[2][0], papan[2][1], papan[2][2], papan[2][3], papan[2][4]);
     printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   4 |  %c  |  %c  |  %c  |  %c  |  %c  |  (Baris)\n", papan[3][0], papan[3][1], papan[3][2], papan[3][3], papan[3][4]);
+    printf("\t\t\t\t\t   4 |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[3][0], papan[3][1], papan[3][2], papan[3][3], papan[3][4]);
     printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t     |     |     |     |     |     |\n");
     printf("\t\t\t\t\t   5 |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[4][0], papan[4][1], papan[4][2], papan[4][3], papan[4][4]);

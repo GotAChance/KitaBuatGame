@@ -247,7 +247,7 @@ void Level1(){
 }
 
 void Level2(){
-	char papan[6][6];
+	char papan[5][5];
 	int i,j;
 	for (i=0;i<6;i++){
 		for (j=0;j<6;j++){
@@ -284,7 +284,7 @@ void Level2(){
 
 
 void Level3(){
-	char papan[7][7];
+	char papan[6][6];
 	int i,j;
 	for (i=0;i<7;i++){
 		for (j=0;j<7;j++){

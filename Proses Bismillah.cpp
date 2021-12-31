@@ -211,6 +211,7 @@ void Level1(){
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
     printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t\t        _________________ \n");
     printf("\t\t\t\t\t\t       |     |     |     |\n");
     printf("\t\t\t\t\t\t     1 |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2]);
     printf("\t\t\t\t\t\t       |_____|_____|_____|\n");
@@ -219,7 +220,7 @@ void Level1(){
     printf("\t\t\t\t\t\t       |_____|_____|_____|\n");
     printf("\t\t\t\t\t\t       |     |     |     |\n");
     printf("\t\t\t\t\t\t     3 |  %c  |  %c  |  %c  |\n", papan[2][0], papan[2][1], papan[2][2]);
-    printf("\t\t\t\t\t\t       |     |     |     |\n");
+    printf("\t\t\t\t\t\t       |_____|_____|_____|\n");
     printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t\t         1      2     3     \n\n");
     printf("\t\t\t\t\t                    (Kolom)                 \n\n");
@@ -241,6 +242,7 @@ void Level2(){
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
+    printf("\t\t\t\t\t         _____________________________ \n");
     printf("\t\t\t\t\t        |     |     |     |     |     |\n");
     printf("\t\t\t\t\t      1 |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4]);
     printf("\t\t\t\t\t        |_____|_____|_____|_____|_____|\n");
@@ -255,7 +257,7 @@ void Level2(){
     printf("\t\t\t\t\t        |_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t        |     |     |     |     |     |\n");
     printf("\t\t\t\t\t      5 |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[4][0], papan[4][1], papan[4][2], papan[4][3], papan[4][4]);
-    printf("\t\t\t\t\t        |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t        |_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t           1     2     3     4     5   \n\n");
     printf("\t\t\t\t\t                    (Kolom)           \n\n");
@@ -278,7 +280,8 @@ void Level3(){
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t      ___________________________________ \n");
+	printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
     printf("\t\t\t\t\t   1 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4], papan[0][5]);
     printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
@@ -295,7 +298,7 @@ void Level3(){
     printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
     printf("\t\t\t\t\t   6 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[5][0], papan[5][1], papan[5][2], papan[5][3], papan[5][4], papan[5][5]);
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t        1     2     3     4     5     6   \n\n");
     printf("\t\t\t\t\t                    (Kolom)                 \n\n");
@@ -388,7 +391,8 @@ void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int pl
 	printf("\t\t\t\t\t\t     (%s)       (%s)   \n", nama1,nama2);
 	printf("\t\t\t\t\t\t        %d             %d    \n", skor1,skor2);
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t      ___________________________________ \n");
+	printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
     printf("\t\t\t\t\t   1 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4], papan[0][5]);
     printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
@@ -405,7 +409,7 @@ void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int pl
     printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
     printf("\t\t\t\t\t   6 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[5][0], papan[5][1], papan[5][2], papan[5][3], papan[5][4], papan[5][5]);
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
+    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t        1     2     3     4     5     6   \n\n");
     printf("\t\t\t\t\t                    (Kolom)                 \n\n");

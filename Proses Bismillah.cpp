@@ -33,6 +33,7 @@ int OlahInputBaris(int y);
 int OlahInputKolom(int z);
 int cekSkor(int i,int j,char papan[6][6]);
 int cekKotakPenuh(int cekPenuh, int i, int j);
+void max6Huruf(char nama[10]);
 
 	
 typedef struct{
@@ -317,8 +318,10 @@ void playPlayervsPlayer(){
 	player2.skor=0;
 	UIinputnama1();
 	scanf("%s", &player1.nama);
+	max6Huruf( player1.nama);
 	UIinputnama2();
 	scanf("%s", &player2.nama);
+	max6Huruf( player2.nama);
 	char papan[6][6];
 	int i,j;
 	for (i=0;i<6;i++){
@@ -349,12 +352,22 @@ void playPlayervsPlayer(){
 	}
 }
 
+void max6Huruf(char nama[10]){
+	int lenght;
+	lenght=strlen(nama);
+	if (lenght>6){
+		printf("\nNama maksimal 6 karakter\n");
+		system("pause");
+		playPlayervsPlayer();
+	}
+}
+
 void UIinputnama1(){
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
 	printf("\t\t\t\t\t|               Enter Name Player1               |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
-	printf("\t\t\t\t\t                    (No Space)              \n\t\t\t\t\t\t\t      ");
+	printf("\t\t\t\t\t                  (Maks 6 huruf)              \n\t\t\t\t\t\t\t      ");
 }
 
 void UIinputnama2(){
@@ -362,7 +375,7 @@ void UIinputnama2(){
 	printf("\t\t\t\t\t ________________________________________________\n");
 	printf("\t\t\t\t\t|               Enter Name Player2               |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
-	printf("\t\t\t\t\t                    (No Space)              \n\t\t\t\t\t\t\t      ");
+	printf("\t\t\t\t\t                  (Maks 6 huruf)              \n\t\t\t\t\t\t\t      ");
 }
 
 void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int player, char papan[6][6]){

@@ -311,6 +311,8 @@ void Level3(){
 // ===============================================================================================================================================================//
 
 void playPlayervsPlayer(){
+	
+	/* Kamus Data */
 	int inputSO, inputKolom, inputBaris;
 	int cekPenuh=0;
 	int player=1;
@@ -321,6 +323,8 @@ void playPlayervsPlayer(){
 	player1.skor=0;
 	player2.skor=0;
 	UIinputnama1();
+	
+	/* Algoritma */
 	scanf("%s", &player1.nama);
 	max6Huruf( player1.nama);
 	UIinputnama2();

@@ -14,20 +14,20 @@ int inputChooseYourLevel(int input);
 int inputChooseYourEnemy(int input);
 int inputExit(int input);
 
-/* Modul Untuk Yang player vs player */
+/* Modul Untuk Mode player vs player */
 void UIinputnama1();
 void UIinputnama2();
 void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int player, char papan[6][6]); // papan di mode player vs player dan player vs bot berbeda karena ada perbedaan di papan skor nya //
 int cekPosisiInput(int m, int n, int k,int player,char papan[][6], int CekSudahBenar);
 void playPlayervsPlayer();
 
-/* Modul untuk yang player vs komputer */
+/* Modul untuk Mode player vs komputer */
 void EnterYourName();
 void Level1();
 void Level2();
 void Level3();
 
-/* Modul yang ada di player vs player dan player vs komputer */
+/* Modul yang ada di Mode player vs player dan Mode player vs komputer */
 void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]);
 void max6Huruf(char nama[10]);
 void Retry();
@@ -315,7 +315,7 @@ void Level3(){
 void playPlayervsPlayer(){
 	/* Kamus Data */
 	int inputSO, inputKolom, inputBaris;
-	int cekPenuh=0;
+	int cekPenuh=35;
 	int player=1;
 	int penanda=1;
 	int CekSudahBenar=1,CekPosisi;
@@ -370,30 +370,6 @@ void playPlayervsPlayer(){
 	tampilPapanPvP( player1.nama,  player2.nama,  player1.skor,  player2.skor,  player, papan);
 	CekWin(player1.skor,player2.skor,player1.nama,player2.nama);
 	Retry();
-}
-
-void Retry(){
-	int inputRetry;
-	system("cls");
-	printf("\n\n");
-	printf("\t\t\t\t\t ___________________________________________\n");
-	printf("\t\t\t\t\t|                                           |\n");
-	printf("\t\t\t\t\t|       APAKAH MAU MENGULANG PERMAINAN?     |\n");
-	printf("\t\t\t\t\t|    ====================================   |\n");
-	printf("\t\t\t\t\t|                                           |\n");
-	printf("\t\t\t\t\t|               YA(1)   TIDAK(2)            |\n");
-	printf("\t\t\t\t\t|___________________________________________|\n\n");
-	printf("\t\t\t\t\t           Masukan Angka (1 atau 2):");
-	inputDiRetry(inputRetry);
-}
-
-void inputDiRetry(int inputRetry){
-	scanf("%d", &inputRetry);
-	if (inputRetry==1){
-		playPlayervsPlayer();
-	}else if (inputRetry==2){
-		tampilMenu();
-	}
 }
 
 void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]){
@@ -468,6 +444,31 @@ void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int pl
     printf("\t\t\t\t\t                    (Kolom)                 \n\n");
     printf("sekarang giliran player %d\n", player);
 }
+
+void Retry(){
+	int inputRetry;
+	system("cls");
+	printf("\n\n");
+	printf("\t\t\t\t\t ___________________________________________\n");
+	printf("\t\t\t\t\t|                                           |\n");
+	printf("\t\t\t\t\t|       APAKAH MAU MENGULANG PERMAINAN?     |\n");
+	printf("\t\t\t\t\t|    ====================================   |\n");
+	printf("\t\t\t\t\t|                                           |\n");
+	printf("\t\t\t\t\t|               YA(1)   TIDAK(2)            |\n");
+	printf("\t\t\t\t\t|___________________________________________|\n\n");
+	printf("\t\t\t\t\t           Masukan Angka (1 atau 2):");
+	inputDiRetry(inputRetry);
+}
+
+void inputDiRetry(int inputRetry){
+	scanf("%d", &inputRetry);
+	switch (inputRetry){
+		case 1 : playPlayervsPlayer();break;
+		case 2 : tampilMenu();break;
+		default : printf("\nInput harus angka 1 atau 2\n");system("pause");Retry();break;
+	}
+}
+
 
 int cekKotakPenuh(int cekPenuh, int i, int j){
 	int penanda;

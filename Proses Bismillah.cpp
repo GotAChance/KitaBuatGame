@@ -315,7 +315,7 @@ void Level3(){
 void playPlayervsPlayer(){
 	/* Kamus Data */
 	int inputSO, inputKolom, inputBaris;
-	int cekPenuh=35;
+	int cekPenuh=0;
 	int player=1;
 	int penanda=1;
 	int CekSudahBenar=1,CekPosisi;

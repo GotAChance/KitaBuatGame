@@ -2,8 +2,10 @@
 #include <windows.h>
 #include <string.h>
 
+
 /* Modul yang ada di menu */
 
+void tampilanSOS();
 void tampilMenu();
 void kredit();
 void Exit();
@@ -57,13 +59,13 @@ void tampilMenu(){
 	system("cls");
 	printf("\t\t\t\t\t _______________________________________________\n");
 	printf("\t\t\t\t\t|                                               |\n");
-	printf("\t\t\t\t\t|         #######  #####  #####  #   #          |\n");
-	printf("\t\t\t\t\t|         #  #  #  #      #   #  #   #          |\n");
-	printf("\t\t\t\t\t|         #  #  #  #####  #   #  #   #          |\n");
-	printf("\t\t\t\t\t|         #  #  #  #      #   #  #   #          |\n");
-	printf("\t\t\t\t\t|         #  #  #  #####  #   #  #####          |\n");
+	printf("\t\t\t\t\t|         #######     #####    #######          |\n");
+	printf("\t\t\t\t\t|         #           #   #    #                |\n");
+	printf("\t\t\t\t\t|         #######     #   #    #######          |\n");
+	printf("\t\t\t\t\t|               #     #   #          #          |\n");
+	printf("\t\t\t\t\t|         #######     #####    #######          |\n");
 	printf("\t\t\t\t\t|                                               |\n");
-	printf("\t\t\t\t\t|                 SOS GotAChange                |\n");
+	printf("\t\t\t\t\t|                   GotAChange                  |\n");
 	printf("\t\t\t\t\t|      ===================================      |\n");
 	printf("\t\t\t\t\t|        PLAY    SCORE    CREDIT    Exit        |\n");
 	printf("\t\t\t\t\t|        (1)      (2)      (3)      (4)         |\n");
@@ -418,8 +420,8 @@ void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int pl
 	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
-	printf("\t\t\t\t\t\t     (%s)       (%s)   \n", nama1,nama2);
-	printf("\t\t\t\t\t\t        %d             %d    \n", skor1,skor2);
+	printf("\t\t\t\t\t\t     (%s)        (%s)   \n", nama1,nama2);
+	printf("\t\t\t\t\t\t        %d            %d    \n", skor1,skor2);
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
     printf("\t\t\t\t\t   1 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4], papan[0][5]);
@@ -456,7 +458,7 @@ void Retry(){
 	printf("\t\t\t\t\t|                                           |\n");
 	printf("\t\t\t\t\t|               YA(1)   TIDAK(2)            |\n");
 	printf("\t\t\t\t\t|___________________________________________|\n\n");
-	printf("\t\t\t\t\t           Masukan Angka (1 atau 2):");
+	printf("\t\t\t\t\t          Masukkan Angka (1 atau 2):");
 	inputDiRetry(inputRetry);
 }
 

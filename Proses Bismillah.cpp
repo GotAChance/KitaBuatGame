@@ -5,7 +5,6 @@
 
 /* Modul yang ada di menu */
 
-void tampilanSOS();
 void tampilMenu();
 void kredit();
 void Exit();
@@ -19,35 +18,39 @@ int inputExit(int input);
 /* Modul Untuk Mode player vs player */
 void UIinputnama1();
 void UIinputnama2();
-void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int player, char papan[6][6]); // papan di mode player vs player dan player vs bot berbeda karena ada perbedaan di papan skor nya //
-int cekPosisiInput(int m, int n, int k,int player,char papan[][6], int CekSudahBenar);
+int cekPosisiInput(int m, int n, int k,char papan[][6], int CekSudahBenar);
 void playPlayervsPlayer();
 
 /* Modul untuk Mode player vs komputer */
+void playPlayervsKomputer();
 void EnterYourName();
-void Level1();
-void Level2();
-void Level3();
+void Level1(int player, char papan[6][6]);
+void Level2(int player, char papan[6][6]);
 
 /* Modul yang ada di Mode player vs player dan Mode player vs komputer */
+void Level3(int player, char papan[6][6]);
 void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]);
-void max6Huruf(char nama[10]);
 void Retry();
 void inputDiRetry(int inputRetry);
 int OlahInputSO(int x);
 int OlahInputBaris(int y);
 int OlahInputKolom(int z);
-int cekSkor(int m,int n,int k,char papan[][6]);
+int cekSkor(int m,int n,int k,char papan[][6],int j);
 int cekKotakPenuh(int cekPenuh, int i, int j);
 int ketikSO (int inputSO, int k);
 int ketikBaris(int inputBaris, int m);
 int ketikKolom(int inputKolom,int n);
+
 
 	
 typedef struct{
 	char nama[10];
 	int skor;
 }StatusPemain;
+ 
+/* Variabel Global */ 
+StatusPemain player1;
+StatusPemain player2;
 
 int main(){
 	tampilMenu();
@@ -59,13 +62,13 @@ void tampilMenu(){
 	system("cls");
 	printf("\t\t\t\t\t _______________________________________________\n");
 	printf("\t\t\t\t\t|                                               |\n");
-	printf("\t\t\t\t\t|         #######     #####    #######          |\n");
-	printf("\t\t\t\t\t|         #           #   #    #                |\n");
-	printf("\t\t\t\t\t|         #######     #   #    #######          |\n");
-	printf("\t\t\t\t\t|               #     #   #          #          |\n");
-	printf("\t\t\t\t\t|         #######     #####    #######          |\n");
+	printf("\t\t\t\t\t|         #######  #####  #####  #   #          |\n");
+	printf("\t\t\t\t\t|         #  #  #  #      #   #  #   #          |\n");
+	printf("\t\t\t\t\t|         #  #  #  #####  #   #  #   #          |\n");
+	printf("\t\t\t\t\t|         #  #  #  #      #   #  #   #          |\n");
+	printf("\t\t\t\t\t|         #  #  #  #####  #   #  #####          |\n");
 	printf("\t\t\t\t\t|                                               |\n");
-	printf("\t\t\t\t\t|                   GotAChange                  |\n");
+	printf("\t\t\t\t\t|                 SOS GotAChange                |\n");
 	printf("\t\t\t\t\t|      ===================================      |\n");
 	printf("\t\t\t\t\t|        PLAY    SCORE    CREDIT    Exit        |\n");
 	printf("\t\t\t\t\t|        (1)      (2)      (3)      (4)         |\n");
@@ -150,15 +153,101 @@ void Play(){
 int inputChooseYourEnemy(int input){
 	scanf("%d", &input);
 	if(input==1){
-		EnterYourName();
+		playPlayervsKomputer();
 	}
 	if(input==2){
 		playPlayervsPlayer();
 	}
 	return input;
 }
+
+// ===============================================================================================================================================================//
+//                                                             MODE PLAYER VS KOMPUTER                                                                           //
+// ===============================================================================================================================================================//
+
+void playPlayervsKomputer(){
+	/* Kamus Data */
+	int inputLevel; // variabel untuk inputLevel yang diinginkan //
+	int i,j; // variabel untuk menghitung jumlah baris (i) dan kolom (j) //
+	int m,n,k; // m adalah input baris yang sudah dikurang 1, n adalah input kolom yang sudah dikurangi 1, dan k adalah input S atau O yang sudah diubah jadi angka //
+	char papan[6][6];
+	int player=1;
+	int penanda=0; // variabel ini berguna sebagai penanda apakah game sudah selesai atau belum //
+	int inputSO, inputKolom, inputBaris;; // ketiga variabel ini sama fungsi nya seperti m,n,k cuman belum di olah saja //
+	int cekPenuh=0; // cekPenuh berfungsi sebagai penanda bahwa kotas sudah terisi penuh atau belum //
+	int CekSudahBenar=1,CekPosisi;
+	
+	// inisialisasi skor awal //
+	player1.skor=0;
+	player2.skor=0;
+	
+  	// inisialisasi nama BOT //
+	player2.nama[0]='B';
+	player2.nama[1]='O';
+	player2.nama[2]='T';
+	
+	/* Algoritma */
+	EnterYourName();
+	ChooseLevel();
+	inputLevel=inputChooseYourLevel(inputLevel);
+	switch (inputLevel){
+		case 1 :
+			for (i=0;i<3;i++){
+				for (j=0;j<3;j++){
+					papan[i][j]=' ';
+				}
+			}break;
+		case 2 :
+			for (i=0;i<5;i++){
+				for (j=0;j<5;j++){
+					papan[i][j]=' ';
+				}
+			}break;
+		case 3 :
+			for (i=0;i<6;i++){
+				for (j=0;j<6;j++){
+					papan[i][j]=' ';
+				}
+			}break;
+	}
+	do{
+		if (player%2==1){
+     	  	player=1;
+		}else{
+			player=2;
+		}
+		switch (inputLevel){
+			case 1 : Level1(player,papan);break;
+			case 2 : Level2(player,papan);break;
+			case 3 : Level3(player,papan);break; 
+		}
+	
+			k=ketikSO (inputSO, k);
+			m=ketikBaris(inputBaris, m);
+			n=ketikKolom(inputKolom, n);
+			CekPosisi=cekPosisiInput(m, n, k, papan, CekSudahBenar);
+				if (CekPosisi==1){
+				player--;
+				cekPenuh--;
+			}
+		
+	  	if (cekSkor(m,n,k,papan,j)>0 && CekPosisi==0){
+    		if (player==1){
+    			player1.skor = player1.skor + cekSkor(m,n,k,papan,j);
+    			player--;
+			}else if (player==2){
+				player2.skor = player2.skor + cekSkor(m,n,k,papan,j);
+				player--;
+			}
+		}
+		player++;
+    	cekPenuh++;
+    	penanda=cekKotakPenuh(cekPenuh,i,j);
+	}while (penanda != 0);
+}
+
+
 void ChooseLevel(){
-	int input;
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
 	printf("\t\t\t\t\t|                  Choose Level                  |\n");
@@ -174,50 +263,36 @@ void ChooseLevel(){
 	printf("\t\t\t\t\t|                                                |\n");
 	printf("\t\t\t\t\t|                                                |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
-	inputChooseYourLevel(input);
 }
 
 int inputChooseYourLevel(int input){
 	scanf("%d", &input);
-	switch(input){
-		case 1 :Level1(); break;
-		case 2 :Level2(); break;
-		case 3 :Level3(); break;
-	}
+	return input;
 }
 
 void EnterYourName(){
-	StatusPemain player;
-	int lenght;
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
 	printf("\t\t\t\t\t|                 Enter Your Name                |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
-	printf("\t\t\t\t\t                  (Maks 5 Huruf)                \n\t\t\t\t\t\t\t      ");
-	scanf("%s", &player.nama);
-	lenght=strlen(player.nama);
-	if (lenght>5){
-		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 5!\n");
+	printf("\t\t\t\t\t                  (Maks 6 Huruf)                \n\t\t\t\t\t\t\t      ");
+	scanf("%s", &player1.nama);
+	if (strlen(player1.nama)>6){
+		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 6!\n");
 		system("pause");
 		EnterYourName();
 	}
-	ChooseLevel();
 }
 
-void Level1(){
-	char papan[6][6];
-	int i,j;
-	for (i=0;i<6;i++){
-		for (j=0;j<6;j++){
-			papan[i][j]=' ';
-		}
-	}
+void Level1(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
 	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
+	printf("\t\t\t\t\t\t     (%s)       (%s)      \n", player1.nama,player2.nama);
+	printf("\t\t\t\t\t\t        %d             %d    \n", player1.skor, player2.skor);
     printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t\t       |     |     |     |\n");
     printf("\t\t\t\t\t\t     1 |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2]);
@@ -231,23 +306,18 @@ void Level1(){
     printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t\t         1      2     3     \n\n");
     printf("\t\t\t\t\t                    (Kolom)                 \n\n");
-    printf("\t\t\t\t\t            Masukan Huruf S atau O :\n");
+    printf("SEKARANG GILIRAN PLAYER %d\n", player);
 }
 
-void Level2(){
-	char papan[5][5];
-	int i,j;
-	for (i=0;i<5;i++){
-		for (j=0;j<5;j++){
-			papan[i][j]=' ';
-		}
-	}
+void Level2(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
 	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
+	printf("\t\t\t\t\t\t     (%s)       (%s)      \n", player1.nama,player2.nama);
+	printf("\t\t\t\t\t\t        %d             %d    \n", player1.skor, player2.skor);
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t        |     |     |     |     |     |\n");
     printf("\t\t\t\t\t      1 |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4]);
@@ -267,24 +337,19 @@ void Level2(){
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t           1     2     3     4     5   \n\n");
     printf("\t\t\t\t\t                    (Kolom)           \n\n");
-    printf("\t\t\t\t\t            Masukan Huruf S atau O :\n");
+    printf("SEKARANG GILIRAN PLAYER %d\n", player);
 }
 
 
-void Level3(){
-	char papan[6][6];
-	int i,j;
-	for (i=0;i<6;i++){
-		for (j=0;j<6;j++){
-			papan[i][j]=' ';
-		}
-	}
+void Level3(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
 	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
+	printf("\t\t\t\t\t\t     (%s)       (%s)      \n", player1.nama,player2.nama);
+	printf("\t\t\t\t\t\t        %d             %d    \n", player1.skor, player2.skor);
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
     printf("\t\t\t\t\t   1 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4], papan[0][5]);
@@ -307,7 +372,7 @@ void Level3(){
     printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
     printf("\t\t\t\t\t        1     2     3     4     5     6   \n\n");
     printf("\t\t\t\t\t                    (Kolom)                 \n\n");
-    printf("\t\t\t\t\t            Masukan Huruf S atau O :\n");
+    printf("SEKARANG GILIRAN PLAYER %d\n", player);
 }	
 
 // ===============================================================================================================================================================//
@@ -316,26 +381,22 @@ void Level3(){
 
 void playPlayervsPlayer(){
 	/* Kamus Data */
-	int inputSO, inputKolom, inputBaris;
-	int cekPenuh=0;
+	int inputSO, inputKolom, inputBaris; // ketiga variabel ini sama fungsi nya seperti m,n,k cuman belum di kurangi aja //
+	int cekPenuh=0;  // cekPenuh berfungsi sebagai penanda bahwa kotas sudah terisi penuh atau belum //
 	int player=1;
-	int penanda=1;
+	int penanda=1; // variabel ini berguna sebagai penanda apakah game sudah selesai atau belum //
 	int CekSudahBenar=1,CekPosisi;
-	int m,n,k;
+	int m,n,k; // m adalah input baris yang sudah dikurang 1, n adalah input kolom yang sudah dikurangi 1, dan k adalah input S atau O yang sudah diubah jadi angka //
 	char papan[6][6];
-	int i,j;
-	StatusPemain player1;
-	StatusPemain player2;
+	int i,j; // variabel untuk menghitung jumlah baris (i) dan kolom (j) //
+	
+	// inisialisasi skor awal //
 	player1.skor=0;
 	player2.skor=0;
 	
 	/* Algoritma */
 	UIinputnama1();
-	scanf("%s", &player1.nama);
-	max6Huruf( player1.nama);
 	UIinputnama2();
-	scanf("%s", &player2.nama);
-	max6Huruf( player2.nama);
 	for (i=0;i<6;i++){
 		for (j=0;j<6;j++){
 			papan[i][j]=' ';
@@ -347,21 +408,21 @@ void playPlayervsPlayer(){
 		}else{
 			player=2;
 		}
-		tampilPapanPvP( player1.nama,  player2.nama,  player1.skor,  player2.skor,  player, papan);
+		Level3(player, papan);
 		k=ketikSO (inputSO, k);
 		m=ketikBaris(inputBaris, m);
 		n=ketikKolom(inputKolom, n);	
-		CekPosisi=cekPosisiInput(m, n, k,player, papan, CekSudahBenar);
+		CekPosisi=cekPosisiInput(m, n, k, papan, CekSudahBenar);
 		if (CekPosisi==1){
 			player--;
 			cekPenuh--;
 		}
-    	if (cekSkor(m,n,k,papan)==1 && CekPosisi==0){
+    	if (cekSkor(m,n,k,papan,j)>0 && CekPosisi==0){
     		if (player==1){
-    			player1.skor++;
+    			player1.skor = player1.skor + cekSkor(m,n,k,papan,j);
     			player--;
 			}else if (player==2){
-				player2.skor++;
+				player2.skor = player2.skor + cekSkor(m,n,k,papan,j);
 				player--;
 			}
 		}
@@ -369,10 +430,11 @@ void playPlayervsPlayer(){
     	cekPenuh++;
     	penanda=cekKotakPenuh(cekPenuh,i,j);
 	}while (penanda!=0);
-	tampilPapanPvP( player1.nama,  player2.nama,  player1.skor,  player2.skor,  player, papan);
+	Level3(player, papan);
 	CekWin(player1.skor,player2.skor,player1.nama,player2.nama);
 	Retry();
 }
+
 
 void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
@@ -387,22 +449,18 @@ void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]){
 	}
 }
 
-void max6Huruf(char nama[10]){
-	int lenght;
-	lenght=strlen(nama);
-	if (lenght>6){
-		printf("\nNama maksimal 6 karakter\n");
-		system("pause");
-		playPlayervsPlayer();
-	}
-}
-
 void UIinputnama1(){
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
 	printf("\t\t\t\t\t|               Enter Name Player1               |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
 	printf("\t\t\t\t\t                  (Maks 6 huruf)              \n\t\t\t\t\t\t\t      ");
+	scanf("%s", &player1.nama);
+	if (strlen(player1.nama)>6){
+		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 6!\n");
+		system("pause");
+		UIinputnama1();
+	}
 }
 
 void UIinputnama2(){
@@ -411,40 +469,12 @@ void UIinputnama2(){
 	printf("\t\t\t\t\t|               Enter Name Player2               |\n");
 	printf("\t\t\t\t\t|________________________________________________|\n");
 	printf("\t\t\t\t\t                  (Maks 6 huruf)              \n\t\t\t\t\t\t\t      ");
-}
-
-void tampilPapanPvP(char nama1[10], char nama2[10], int skor1, int skor2, int player, char papan[6][6]){
-	system ("mode 100,43");
-	system("cls");
-	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
-	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
-	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
-	printf("\t\t\t\t\t\t     Player 1   -  Player 2 \n");
-	printf("\t\t\t\t\t\t     (%s)        (%s)   \n", nama1,nama2);
-	printf("\t\t\t\t\t\t        %d            %d    \n", skor1,skor2);
-    printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
-	printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   1 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[0][0], papan[0][1], papan[0][2], papan[0][3], papan[0][4], papan[0][5]);
-    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   2 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[1][0], papan[1][1], papan[1][2], papan[1][3], papan[1][4], papan[1][5]);
-    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   3 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[2][0], papan[2][1], papan[2][2], papan[2][3], papan[2][4], papan[2][5]);
-    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   4 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  | (Baris)\n", papan[3][0], papan[3][1], papan[3][2], papan[3][3], papan[3][4], papan[3][5]);
-    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   5 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[4][0], papan[4][1], papan[4][2], papan[4][3], papan[4][4], papan[4][5]);
-    printf("\t\t\t\t\t     |_____|_____|_____|_____|_____|_____|\n");
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t   6 |  %c  |  %c  |  %c  |  %c  |  %c  |  %c  |\n", papan[5][0], papan[5][1], papan[5][2], papan[5][3], papan[5][4], papan[5][5]);
-    printf("\t\t\t\t\t     |     |     |     |     |     |     |\n");
-    printf("\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
-    printf("\t\t\t\t\t        1     2     3     4     5     6   \n\n");
-    printf("\t\t\t\t\t                    (Kolom)                 \n\n");
-    printf("sekarang giliran player %d\n", player);
+	scanf("%s", &player2.nama);
+	if (strlen(player2.nama)>6){
+		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 6!\n");
+		system("pause");;
+		UIinputnama2();
+	}
 }
 
 void Retry(){
@@ -458,7 +488,7 @@ void Retry(){
 	printf("\t\t\t\t\t|                                           |\n");
 	printf("\t\t\t\t\t|               YA(1)   TIDAK(2)            |\n");
 	printf("\t\t\t\t\t|___________________________________________|\n\n");
-	printf("\t\t\t\t\t          Masukkan Angka (1 atau 2):");
+	printf("\t\t\t\t\t           Masukan Angka (1 atau 2):");
 	inputDiRetry(inputRetry);
 }
 
@@ -482,7 +512,7 @@ int cekKotakPenuh(int cekPenuh, int i, int j){
 	return penanda;
 }
 
-int cekPosisiInput(int m, int n, int k,int player,char papan[][6], int CekSudahBenar){
+int cekPosisiInput(int m, int n, int k,char papan[][6], int CekSudahBenar){
     if (papan[m][n]==' '){
    		 papan[m][n]=k;	
    		 CekSudahBenar=0;
@@ -535,63 +565,62 @@ int ketikKolom(int inputKolom,int n){
 }
 
 
-int cekSkor(int m,int n,int k,char papan[6][6]){
+int cekSkor(int m,int n,int k,char papan[6][6],int j){
+	int skor=0;
 	if (k==83){
-			if ((papan[m][n-1])=='O' && (papan[m][n-2])=='S')
+		if ((n!=0) && (papan[m][n-1])=='O' && (papan[m][n-2])=='S')
 		{
-			return 1;
+			skor++;
 		}
-	        if ((papan[m][n+1]== 'O') && (papan[m][n+2] == 'S'))
+        if ((n!=j-1) && (papan[m][n+1]== 'O') && (papan[m][n+2] == 'S'))
         {
-            return 1;
+            skor++;
         }
         if((papan[m+1][n] == 'O') && (papan[m+2][n] == 'S'))
         {
-            return 1;
+            skor++;
         }
         if((papan[m-1][n] == 'O') && (papan[m-2][n] == 'S'))
         {
-            return 1;
+            skor++;
         }
-        if((papan[m+1][n+1] == 'O') && (papan[m+2][n+2] == 'S'))
+        if((n!=j-1) && (papan[m+1][n+1] == 'O') && (papan[m+2][n+2] == 'S'))
         {
-            return 1;
+            skor++;
         }
-        if((papan[m-1][n-1] == 'O') && (papan[m-2][n-2] == 'S'))
+        if((n!=0) && (papan[m-1][n-1] == 'O') && (papan[m-2][n-2] == 'S'))
         {
-            return 1;
+            skor++;
         }
-        if((papan[m+1][n-1] == 'O') && (papan[m+2][n-2] == 'S'))
+        if((n!=0) && (papan[m+1][n-1] == 'O') && (papan[m+2][n-2] == 'S'))
         {
-            return 1;
+            skor++;
         }
-        if((papan[m-1][n+1] == 'O') && (papan[m-2][n+2] == 'S'))
+        if((n!=j-1) &&(papan[m-1][n+1] == 'O') && (papan[m-2][n+2] == 'S'))
         {
-            return 1;
+            skor++;
         }	
 	}
     else if (k==79){
     	if((papan[m+1][n] == 'S') && (papan[m-1][n] == 'S'))
         {
-            return 1;
+            skor++;
         }
-        if((papan[m][n+1] == 'S') && (papan[m][n-1] == 'S'))
+        if((n!=j-1) && (n!=0) && (papan[m][n+1] == 'S') && (papan[m][n-1] == 'S'))
         {
-            return 1;
+            skor++;
         }
-        if((papan[m+1][n+1] == 'S') && (papan[m-1][n-1] == 'S'))
+        if((n!=j-1) && (n!=0) && (papan[m+1][n+1] == 'S') && (papan[m-1][n-1] == 'S'))
         {
-            return 1;
+            skor++;
         }
-        if((papan[m+1][n-1] == 'S') && (papan[m-1][n+1] == 'S'))
+        if((n!=j-1) && (n!=0) && (papan[m+1][n-1] == 'S') && (papan[m-1][n+1] == 'S'))
         {
-            return 1;
+            skor++;
         }	
-	}else {
-		return 0;
 	}
+	return skor;
 }
-
 
 int OlahInputSO(int x){
 	if(x==1){

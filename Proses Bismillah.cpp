@@ -28,13 +28,14 @@ void Level1(int player, char papan[6][6]);
 void Level2(int player, char papan[6][6]);
 void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]);
 int komputer_cari_ss(int ii, int jj,int j, char papan[6][6]);
-int komputer_cari_os(int m, int n,int ii, int jj,int j, char papan[6][6]);
+int komputer_cari_os(int ii, int jj,int j, char papan[6][6]);
 void komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char papan[6][6]);
 
 
 /* Modul yang ada di Mode player vs player dan Mode player vs komputer */
 void Level3(int player, char papan[6][6]);
-void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]);
+void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]);
+void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]);
 void Retry();
 void inputDiRetry(int inputRetry);
 int OlahInputSO(int x);
@@ -257,6 +258,13 @@ void playPlayervsKomputer(){
     	cekPenuh++;
     	penanda=cekKotakPenuh(cekPenuh,i,j);
 	}while (penanda != 0);
+	switch (inputLevel){
+		case 1 : Level1(player,papan);break;
+		case 2 : Level2(player,papan);break;
+		case 3 : Level3(player,papan);break; 
+	}
+	CekWin1(player1.skor,player2.skor,player1.nama,player2.nama);
+	Retry();
 }
 
 void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]){
@@ -264,11 +272,14 @@ void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]){
 	while (penanda==1){
 		if (komputer_cari_ss( ii, jj, j,  papan)==1){
 			break;
-		}else{
+		}else if (komputer_cari_os(ii, jj, j, papan)==1){
+			break;
+		}
+		else{
 			komputer_cari_kotak_kosong(player, ii, jj, k, j, papan);break;
 		}
-		}		
-	}	
+	}		
+}	
 
 
 void  komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char papan[6][6]){
@@ -290,10 +301,10 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
 	int simbol;
 	for (ii=0; ii<j; ii++){
         for(jj=0; jj<j; jj++){  
-				if((papan[ii][jj+1]=='S') && (papan[ii][jj-1] == 'S') && papan[ii][jj]==' '){
+				if((jj!=0) && (jj!=j-1) && (papan[ii][jj+1]=='S') && (papan[ii][jj-1] == 'S') && papan[ii][jj]==' '){
 					simbol=79;
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,k,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
 					}
 					return 1;
@@ -301,23 +312,23 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
                 if ((papan[ii+1][jj] == 'S') && (papan[ii-1][jj] =='S') && papan[ii][jj]==' '){
 					simbol=79;
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,k,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
 					}
 					return 1;
                 }
-                if((papan[ii+1][jj+1] == 'S') && (papan[ii-1][jj-1] == 'S') && papan[ii][jj]==' '){
+                if((jj!=0) && (jj!=j-1) && (papan[ii+1][jj+1] == 'S') && (papan[ii-1][jj-1] == 'S') && papan[ii][jj]==' '){
 					simbol=79;
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,k,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
 					}
 					return 1;
                 }
-                if((papan[ii+1][jj-1] == 'S') && (papan[ii-1][jj+1] == 'S') && papan[ii][jj]==' '){
+                if((jj!=0) && (jj!=j-1) && (papan[ii+1][jj-1] == 'S') && (papan[ii-1][jj+1] == 'S') && papan[ii][jj]==' '){
 					simbol=79;
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,k,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
 					}
 					return 1;
@@ -328,35 +339,74 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
     }
 
 
-int komputer_cari_os(int m, int n,int ii,int jj,int j, char papan[6][6]){
+int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
+	int simbol;
 	for (ii=0;ii<j;ii++){
 		for (jj=0;jj<j;jj++){
-			if (papan[ii][jj]=' '){
-				if ((papan[ii][jj+1]=='O') && (papan[ii][jj+2])=='S'){
-					return 1;
+			if ((jj!=j-1) && (papan[ii][jj+1]=='O') && (papan[ii][jj+2]=='S') && papan[ii][jj]==' '){
+				simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
 				}
-                if((papan[ii][jj-1]=='O') && (papan[ii][jj-2] == 'S')){
-                    return 1;
-                }
-           		if ((papan[ii+1][jj] == 'O') && (papan[ii+2][jj] =='S')){
 				return 1;
+			}
+            if((jj!=0) && (papan[ii][jj-1]=='O') && (papan[ii][jj-2] == 'S') && papan[ii][jj]==' '){
+            	simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
 				}
-                if ((papan[ii-1][jj] == 'O') && (papan[ii-2][jj] =='S')){
                 return 1;
-                }
-				if((papan[ii+1][jj+1] == 'O') && (papan[ii+2][jj+2] == 'S')){
+            }
+        	if ((papan[ii+1][jj] == 'O') && (papan[ii+2][jj] =='S') && papan[ii][jj]==' '){
+        		simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+				}
+				return 1;
+			}
+            if ((papan[ii-1][jj] == 'O') && (papan[ii-2][jj] =='S') && papan[ii][jj]==' '){
+            	simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+				}
                 return 1;
-                }
-                if((papan[ii-1][jj-1] == 'O') && (papan[ii-2][jj-2] == 'S')){
+            }
+			if((jj!=j-1) && (papan[ii+1][jj+1] == 'O') && (papan[ii+2][jj+2] == 'S') && papan[ii][jj]==' '){
+				simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+				}
                 return 1;
-                }
-                if((papan[ii+1][jj-1] == 'O') && (papan[ii+2][jj-2] == 'S')){
+            }
+            if((jj!=0) && (papan[ii-1][jj-1] == 'O') && (papan[ii-2][jj-2] == 'S') && papan[ii][jj]==' '){
+            	simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+				}
                 return 1;
-                }
-                if((papan[ii-1][jj+1] == 'O') && (papan[ii-2][jj+2] == 'S')){
+            }
+            if((jj!=0) && (papan[ii+1][jj-1] == 'O') && (papan[ii+2][jj-2] == 'S') && papan[ii][jj]==' '){
+            	simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+				}
                 return 1;
-                }
-		  }
+            }
+            if((jj!=j-1) && (papan[ii-1][jj+1] == 'O') && (papan[ii-2][jj+2] == 'S') && papan[ii][jj]==' '){
+            	simbol=83;
+				papan[ii][jj]=simbol;
+				if (cekSkor(ii,jj,simbol,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+				}
+                return 1;
+            }
 		}
 	}
 	return 0;
@@ -548,12 +598,24 @@ void playPlayervsPlayer(){
     	penanda=cekKotakPenuh(cekPenuh,i,j);
 	}while (penanda!=0);
 	Level3(player, papan);
-	CekWin(player1.skor,player2.skor,player1.nama,player2.nama);
+	CekWin2(player1.skor,player2.skor,player1.nama,player2.nama);
 	Retry();
 }
 
+void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]){
+	if (skor1>skor2){
+		printf("\n\t\t\t\t\t\t   SELAMAT ANDA MENANG! \n");
+		system("pause");
+	}else if (skor1==skor2){
+		printf("\n\t\t\t\t\t\t    MANTAP SKOR MASIH IMBANG! \n");
+		system("pause");
+	}else{
+		printf("\n\t\t\t\t\t\t   YAHH ANDA KURANG BERUNTUNG... \n", nama2);
+		system("pause");
+	}
+}
 
-void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]){
+void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
 		printf("\n\t\t\t\t\t\t   SELAMAT %s MENANG! \n", nama1);
 		system("pause");
@@ -563,8 +625,9 @@ void CekWin(int skor1, int skor2, char nama1[10], char nama2[10]){
 	}else{
 		printf("\n\t\t\t\t\t\t   SELAMAT %s MENANG! \n", nama2);
 		system("pause");
-	}
+	}	
 }
+
 
 void UIinputnama1(){
 	system("cls");
@@ -612,7 +675,7 @@ void Retry(){
 void inputDiRetry(int inputRetry){
 	scanf("%d", &inputRetry);
 	switch (inputRetry){
-		case 1 : playPlayervsPlayer();break;
+		case 1 : Play();break;
 		case 2 : tampilMenu();break;
 		default : printf("\nInput harus angka 1 atau 2\n");system("pause");Retry();break;
 	}

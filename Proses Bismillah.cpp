@@ -26,6 +26,11 @@ void playPlayervsKomputer();
 void EnterYourName();
 void Level1(int player, char papan[6][6]);
 void Level2(int player, char papan[6][6]);
+void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]);
+int komputer_cari_ss(int ii, int jj,int j, char papan[6][6]);
+int komputer_cari_os(int m, int n,int ii, int jj,int j, char papan[6][6]);
+void komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char papan[6][6]);
+
 
 /* Modul yang ada di Mode player vs player dan Mode player vs komputer */
 void Level3(int player, char papan[6][6]);
@@ -38,9 +43,8 @@ int OlahInputKolom(int z);
 int cekSkor(int m,int n,int k,char papan[][6],int j);
 int cekKotakPenuh(int cekPenuh, int i, int j);
 int ketikSO (int inputSO, int k);
-int ketikBaris(int inputBaris, int m);
-int ketikKolom(int inputKolom,int n);
-
+int ketikBaris(int inputBaris, int m, int inputLevel);
+int ketikKolom(int inputKolom,int n, int inputLevel);
 
 	
 typedef struct{
@@ -51,6 +55,9 @@ typedef struct{
 /* Variabel Global */ 
 StatusPemain player1;
 StatusPemain player2;
+char papan[6][6];
+int ii,jj,k;
+
 
 int main(){
 	tampilMenu();
@@ -172,10 +179,12 @@ void playPlayervsKomputer(){
 	int m,n,k; // m adalah input baris yang sudah dikurang 1, n adalah input kolom yang sudah dikurangi 1, dan k adalah input S atau O yang sudah diubah jadi angka //
 	char papan[6][6];
 	int player=1;
+	int ii,jj;
 	int penanda=0; // variabel ini berguna sebagai penanda apakah game sudah selesai atau belum //
 	int inputSO, inputKolom, inputBaris;; // ketiga variabel ini sama fungsi nya seperti m,n,k cuman belum di olah saja //
 	int cekPenuh=0; // cekPenuh berfungsi sebagai penanda bahwa kotas sudah terisi penuh atau belum //
 	int CekSudahBenar=1,CekPosisi;
+	int tempatSkorPlayer2;
 	
 	// inisialisasi skor awal //
 	player1.skor=0;
@@ -196,54 +205,161 @@ void playPlayervsKomputer(){
 				for (j=0;j<3;j++){
 					papan[i][j]=' ';
 				}
-			}break;
+			}Level1(player,papan);break;
 		case 2 :
 			for (i=0;i<5;i++){
 				for (j=0;j<5;j++){
 					papan[i][j]=' ';
 				}
-			}break;
+			}Level2(player,papan);break;
 		case 3 :
 			for (i=0;i<6;i++){
 				for (j=0;j<6;j++){
 					papan[i][j]=' ';
 				}
-			}break;
+			}Level3(player,papan);break;
 	}
-	do{
+		do{
+		tempatSkorPlayer2=player2.skor;
 		if (player%2==1){
      	  	player=1;
 		}else{
 			player=2;
 		}
 		switch (inputLevel){
-			case 1 : Level1(player,papan);break;
-			case 2 : Level2(player,papan);break;
-			case 3 : Level3(player,papan);break; 
+		case 1 : Level1(player,papan);break;
+		case 2 : Level2(player,papan);break;
+		case 3 : Level3(player,papan);break; 
 		}
-	
+		if (player==1){
 			k=ketikSO (inputSO, k);
-			m=ketikBaris(inputBaris, m);
-			n=ketikKolom(inputKolom, n);
+			m=ketikBaris(inputBaris, m,inputLevel);
+			n=ketikKolom(inputKolom, n,inputLevel);
 			CekPosisi=cekPosisiInput(m, n, k, papan, CekSudahBenar);
-				if (CekPosisi==1){
+			if (CekPosisi==1){
 				player--;
 				cekPenuh--;
-			}
-		
-	  	if (cekSkor(m,n,k,papan,j)>0 && CekPosisi==0){
-    		if (player==1){
-    			player1.skor = player1.skor + cekSkor(m,n,k,papan,j);
-    			player--;
-			}else if (player==2){
-				player2.skor = player2.skor + cekSkor(m,n,k,papan,j);
+			}	
+			if (cekSkor(m,n,k,papan,j)>0 && CekPosisi==0){
+				player1.skor = player1.skor + cekSkor (m,n,k,papan,j);
 				player--;
+			}		
+		}
+		if (player==2){
+			komputer_gerak(player,ii,  jj,  k,  j,  papan);
+			if (player2.skor>tempatSkorPlayer2){
+				player--;	
 			}
+			printf("\nKLIK ENTER UNTUK MELANJUTKAN !\n");
+			system("pause");
 		}
 		player++;
     	cekPenuh++;
     	penanda=cekKotakPenuh(cekPenuh,i,j);
 	}while (penanda != 0);
+}
+
+void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]){
+	int penanda=1;
+	while (penanda==1){
+		if (komputer_cari_ss( ii, jj, j,  papan)==1){
+			break;
+		}else{
+			komputer_cari_kotak_kosong(player, ii, jj, k, j, papan);break;
+		}
+		}		
+	}	
+
+
+void  komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char papan[6][6]){
+	for (ii=0;ii<j;ii++){
+		for(jj=0;jj<j;jj++){
+			if (papan[ii][jj]==' '){
+				papan[ii][jj]=k;
+				if (cekSkor(ii,jj,k,papan,j)>0){
+					player2.skor = player2.skor + cekSkor (ii,jj,k,papan,j);
+				}
+				return;
+			}
+		}
+	}
+}
+
+
+int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
+	int simbol;
+	for (ii=0; ii<j; ii++){
+        for(jj=0; jj<j; jj++){  
+				if((papan[ii][jj+1]=='S') && (papan[ii][jj-1] == 'S') && papan[ii][jj]==' '){
+					simbol=79;
+					papan[ii][jj]=simbol;
+					if (cekSkor(ii,jj,k,papan,j)>0){
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					}
+					return 1;
+                }
+                if ((papan[ii+1][jj] == 'S') && (papan[ii-1][jj] =='S') && papan[ii][jj]==' '){
+					simbol=79;
+					papan[ii][jj]=simbol;
+					if (cekSkor(ii,jj,k,papan,j)>0){
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					}
+					return 1;
+                }
+                if((papan[ii+1][jj+1] == 'S') && (papan[ii-1][jj-1] == 'S') && papan[ii][jj]==' '){
+					simbol=79;
+					papan[ii][jj]=simbol;
+					if (cekSkor(ii,jj,k,papan,j)>0){
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					}
+					return 1;
+                }
+                if((papan[ii+1][jj-1] == 'S') && (papan[ii-1][jj+1] == 'S') && papan[ii][jj]==' '){
+					simbol=79;
+					papan[ii][jj]=simbol;
+					if (cekSkor(ii,jj,k,papan,j)>0){
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					}
+					return 1;
+                }
+            }
+		}
+	return 0;
+    }
+
+
+int komputer_cari_os(int m, int n,int ii,int jj,int j, char papan[6][6]){
+	for (ii=0;ii<j;ii++){
+		for (jj=0;jj<j;jj++){
+			if (papan[ii][jj]=' '){
+				if ((papan[ii][jj+1]=='O') && (papan[ii][jj+2])=='S'){
+					return 1;
+				}
+                if((papan[ii][jj-1]=='O') && (papan[ii][jj-2] == 'S')){
+                    return 1;
+                }
+           		if ((papan[ii+1][jj] == 'O') && (papan[ii+2][jj] =='S')){
+				return 1;
+				}
+                if ((papan[ii-1][jj] == 'O') && (papan[ii-2][jj] =='S')){
+                return 1;
+                }
+				if((papan[ii+1][jj+1] == 'O') && (papan[ii+2][jj+2] == 'S')){
+                return 1;
+                }
+                if((papan[ii-1][jj-1] == 'O') && (papan[ii-2][jj-2] == 'S')){
+                return 1;
+                }
+                if((papan[ii+1][jj-1] == 'O') && (papan[ii+2][jj-2] == 'S')){
+                return 1;
+                }
+                if((papan[ii-1][jj+1] == 'O') && (papan[ii-2][jj+2] == 'S')){
+                return 1;
+                }
+		  }
+		}
+	}
+	return 0;
 }
 
 
@@ -389,6 +505,7 @@ void playPlayervsPlayer(){
 	int m,n,k; // m adalah input baris yang sudah dikurang 1, n adalah input kolom yang sudah dikurangi 1, dan k adalah input S atau O yang sudah diubah jadi angka //
 	char papan[6][6];
 	int i,j; // variabel untuk menghitung jumlah baris (i) dan kolom (j) //
+	int inputLevel=3;
 	
 	// inisialisasi skor awal //
 	player1.skor=0;
@@ -410,8 +527,8 @@ void playPlayervsPlayer(){
 		}
 		Level3(player, papan);
 		k=ketikSO (inputSO, k);
-		m=ketikBaris(inputBaris, m);
-		n=ketikKolom(inputKolom, n);	
+		m=ketikBaris(inputBaris, m,inputLevel);
+		n=ketikKolom(inputKolom, n,inputLevel);	
 		CekPosisi=cekPosisiInput(m, n, k, papan, CekSudahBenar);
 		if (CekPosisi==1){
 			player--;
@@ -538,29 +655,81 @@ int ketikSO (int inputSO, int k){
 	}
 }
 
-int ketikBaris(int inputBaris, int m){
-	printf("\n\t\t\t\t\t  Masukan Posisi Baris (Angka 1-6):");
-	scanf("%d", &inputBaris);
-	if (inputBaris>=1 && inputBaris<=6){
-	    m=OlahInputBaris (inputBaris);
-    	return m;
-	}else{
-		printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-6)\n");
-		system("pause");
-		ketikBaris(inputBaris,m);	
+int ketikBaris(int inputBaris, int m, int inputLevel){
+	if (inputLevel==1){
+		printf("\n\t\t\t\t\t  Masukan Posisi Baris (Angka 1-3):");
+		scanf("%d", &inputBaris);
+		if (inputBaris>=1 && inputBaris<=3){
+	    	m=OlahInputBaris (inputBaris);
+    		return m;
+		}else{
+			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-3)\n");
+			system("pause");
+			ketikBaris(inputBaris,m,inputLevel);	
+		}
+	}
+	else if (inputLevel==2){
+		printf("\n\t\t\t\t\t  Masukan Posisi Baris (Angka 1-5):");
+		scanf("%d", &inputBaris);
+		if (inputBaris>=1 && inputBaris<=5){
+	    	m=OlahInputBaris (inputBaris);
+    		return m;
+		}else{
+			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-5)\n");
+			system("pause");
+			ketikBaris(inputBaris,m,inputLevel);	
+		}
+	}
+	else if (inputLevel==3){
+		printf("\n\t\t\t\t\t  Masukan Posisi Baris (Angka 1-6):");
+		scanf("%d", &inputBaris);
+		if (inputBaris>=1 && inputBaris<=6){
+	    	m=OlahInputBaris (inputBaris);
+    		return m;
+		}else{
+			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-6)\n");
+			system("pause");
+			ketikBaris(inputBaris,m,inputLevel);	
+		}
 	}
 }
 
-int ketikKolom(int inputKolom,int n){
-	printf("\n\t\t\t\t\t  Masukan Posisi Kolom (Angka 1-6):");
-	scanf("%d", &inputKolom);
-	if (inputKolom>=1 && inputKolom<=6){
-		n=OlahInputKolom (inputKolom);
-    	return n;
-	}else{
-		printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-6)\n");
-		system("pause");
-		ketikKolom(inputKolom,n);
+int ketikKolom(int inputKolom,int n, int inputLevel){
+	if (inputLevel==1){
+		printf("\n\t\t\t\t\t  Masukan Posisi Kolom (Angka 1-3):");
+		scanf("%d", &inputKolom);
+		if (inputKolom>=1 && inputKolom<=3){
+			n=OlahInputKolom (inputKolom);
+    		return n;
+		}else{
+			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-3)\n");
+			system("pause");
+			ketikKolom(inputKolom,n,inputLevel);
+		}	
+	}
+	else if (inputLevel==2){
+		printf("\n\t\t\t\t\t  Masukan Posisi Kolom (Angka 1-5):");
+		scanf("%d", &inputKolom);
+		if (inputKolom>=1 && inputKolom<=5){
+			n=OlahInputKolom (inputKolom);
+    		return n;
+		}else{
+			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-5)\n");
+			system("pause");
+			ketikKolom(inputKolom,n,inputLevel);
+		}	
+	}
+	else if (inputLevel==3){
+		printf("\n\t\t\t\t\t  Masukan Posisi Kolom (Angka 1-6):");
+		scanf("%d", &inputKolom);
+		if (inputKolom>=1 && inputKolom<=6){
+			n=OlahInputKolom (inputKolom);
+    		return n;
+		}else{
+			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-6)\n");
+			system("pause");
+			ketikKolom(inputKolom,n,inputLevel);
+		}	
 	}
 }
 

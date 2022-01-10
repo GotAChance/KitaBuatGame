@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define HIGHSCORE_FILENAME "filehighscore.dat"
 
@@ -389,17 +390,24 @@ void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]){
 
 
 void  komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char papan[6][6]){
-	for (ii=0;ii<j;ii++){
-		for(jj=0;jj<j;jj++){
-			if (papan[ii][jj]==' '){
-				papan[ii][jj]=k;
-				if (cekSkor(ii,jj,k,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,k,papan,j);
-				}
-				return;
-			}
+	int random;
+	k=rand()%2;
+	if (k==1){
+		k=83;
+	}else{
+		k=79;
+	}
+	while (1){
+		random=rand()%(j*j);
+		ii=(random-1)/(j*j);
+		jj=(random-1)%(j*j);
+		
+		if (papan[ii][jj]==' '){
+			papan[ii][jj]=k;
+			break;
 		}
 	}
+	if (cekSkor(ii,jj,k,papan,j)>0);
 }
 
 
@@ -979,4 +987,3 @@ int OlahInputKolom(int z){
 	z=z-1;
 	return z;
 }
-

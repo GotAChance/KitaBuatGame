@@ -40,10 +40,10 @@ void Level2(int player, char papan[6][6]);
 void Level3(int player, char papan[6][6]);
 
 // Modul berikut berfungsi sebagai algoritma cara gerak komputer //
-void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]);
+void komputer_gerak(int ii, int jj, int k, int j, char papan[6][6]);
 int komputer_cari_ss(int ii, int jj,int j, char papan[6][6]);
 int komputer_cari_os(int ii, int jj,int j, char papan[6][6]);
-void komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char papan[6][6]);
+void komputer_cari_kotak_kosong(int ii, int jj, int k, int j, char papan[6][6]);
 
 // Modul berikut berfungsi untuk mengecek siapa yang menang lalu menampilkannya ke layar //
 void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]);
@@ -78,6 +78,9 @@ void swap (int i, int j);
 
 // Modul berikut berfungsi pada fitur help (how to play) //
 void help();
+
+// Modul berikut berfungsi untuk menampilkan fitur gameover //
+void gameover();
 
 typedef struct{
 	char nama[10];
@@ -245,12 +248,14 @@ void highscore(){
 }
 
 void writeData1(){
-	strcpy(data.nama,player1.nama);
-	data.skor=player1.skor;
+	if (player1.skor>player2.skor){
+		strcpy(data.nama,player1.nama);
+		data.skor=player1.skor;
 	
-	FILE *fp = fopen(HIGHSCORE_FILENAME, "ab");
-	fwrite(&data, sizeof(Highscore), 1, fp);
-	fclose(fp);
+		FILE *fp = fopen(HIGHSCORE_FILENAME, "ab");
+		fwrite(&data, sizeof(Highscore), 1, fp);
+		fclose(fp);
+	}
 }
 
 void writeData2(){
@@ -376,7 +381,7 @@ void playPlayervsKomputer(){
 			}		
 		}
 		if (player==2){
-			komputer_gerak(player,ii,  jj,  k,  j,  papan);
+			komputer_gerak(ii,  jj,  k,  j,  papan);
 			if (player2.skor>tempatSkorPlayer2){
 				player--;	
 			}
@@ -388,16 +393,12 @@ void playPlayervsKomputer(){
     	penanda=cekKotakPenuh(cekPenuh,i,j);
 	}while (penanda != 0);
 	writeData1();
-	switch (inputLevel){
-		case 1 : Level1(player,papan);break;
-		case 2 : Level2(player,papan);break;
-		case 3 : Level3(player,papan);break; 
-	}
+	gameover();
 	CekWin1(player1.skor,player2.skor,player1.nama,player2.nama);
 	Retry();
 }
 
-void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]){
+void komputer_gerak(int ii, int jj, int k, int j, char papan[6][6]){
 	while (1){
 		if (komputer_cari_ss( ii, jj, j,  papan)==1){
 			break;
@@ -405,13 +406,13 @@ void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]){
 			break;
 		}
 		else{
-			komputer_cari_kotak_kosong(player, ii, jj, k, j, papan);break;
+			komputer_cari_kotak_kosong(ii, jj, k, j, papan);break;
 		}
 	}		
 }	
 
 
-void  komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char papan[6][6]){
+void  komputer_cari_kotak_kosong(int ii, int jj, int k, int j, char papan[6][6]){
 	int random;
 	k=rand()%2;
 	if (k==1){
@@ -420,7 +421,7 @@ void  komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char p
 		k=79;
 	}
 	while (1){
-		random=rand()%(j*j);
+		random=rand()%((j*j)*j);
 		ii=(random-1)/(j*j);
 		jj=(random-1)%(j*j);
 		
@@ -429,7 +430,9 @@ void  komputer_cari_kotak_kosong(int player,int ii, int jj, int k, int j, char p
 			break;
 		}
 	}
-	if (cekSkor(ii,jj,k,papan,j)>0);
+	if (cekSkor(ii,jj,k,papan,j)>0){
+		player2.skor = player2.skor + cekSkor (ii,jj,k,papan,j);
+	}
 }
 
 
@@ -734,33 +737,40 @@ void playPlayervsPlayer(){
     	penanda=cekKotakPenuh(cekPenuh,i,j);
 	}while (penanda!=0);
 	writeData2();
-	Level3(player, papan);
+	gameover();
 	CekWin2(player1.skor,player2.skor,player1.nama,player2.nama);
 	Retry();
 }
 
+void gameover(){
+	system("cls");
+	printf("\t\t\t\t\t _______________________\n");
+	printf("\t\t\t\t\t|        GAME OVER      |\n");
+	printf("\t\t\t\t\t|_______________________|\n");
+}
+
 void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
-		printf("\n\t\t\t\t\t\t   SELAMAT ANDA MENANG! \n");
+		printf("\n\t\t\t\t\tSELAMAT ANDA MENANG! \n");
 		system("pause");
 	}else if (skor1==skor2){
-		printf("\n\t\t\t\t\t\t    MANTAP SKOR MASIH IMBANG! \n");
+		printf("\n\t\t\t\t\tMANTAP SKOR MASIH IMBANG! \n");
 		system("pause");
 	}else{
-		printf("\n\t\t\t\t\t\t   YAHH ANDA KURANG BERUNTUNG... \n", nama2);
+		printf("\n\t\t\t\t\tYAHH ANDA KURANG BERUNTUNG... \n", nama2);
 		system("pause");
 	}
 }
 
 void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
-		printf("\n\t\t\t\t\t\t   SELAMAT %s MENANG! \n", nama1);
+		printf("\n\t\t\t\t\tSELAMAT %s MENANG! \n", nama1);
 		system("pause");
 	}else if (skor1==skor2){
-		printf("\n\t\t\t\t\t\t   MANTAP SKOR MASIH IMBANG! \n");
+		printf("\n\t\t\t\t\tMANTAP SKOR MASIH IMBANG! \n");
 		system("pause");
 	}else{
-		printf("\n\t\t\t\t\t\t   SELAMAT %s MENANG! \n", nama2);
+		printf("\n\t\t\t\t\t SELAMAT %s MENANG! \n", nama2);
 		system("pause");
 	}	
 }

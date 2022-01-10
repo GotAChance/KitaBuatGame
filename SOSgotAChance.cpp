@@ -375,8 +375,7 @@ void playPlayervsKomputer(){
 }
 
 void komputer_gerak(int player,int ii, int jj, int k, int j, char papan[6][6]){
-	int penanda=1;
-	while (penanda==1){
+	while (1){
 		if (komputer_cari_ss( ii, jj, j,  papan)==1){
 			break;
 		}else if (komputer_cari_os(ii, jj, j, papan)==1){

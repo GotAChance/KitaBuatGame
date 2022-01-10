@@ -421,9 +421,9 @@ void  komputer_cari_kotak_kosong(int ii, int jj, int k, int j, char papan[6][6])
 		k=79;
 	}
 	while (1){
-		random=rand()%((j*j)*j);
-		ii=(random-1)/(j*j);
-		jj=(random-1)%(j*j);
+		random=rand()%((j*j)+1);
+		ii=(random-1)/j;
+		jj=(random-1)%j;
 		
 		if (papan[ii][jj]==' '){
 			papan[ii][jj]=k;

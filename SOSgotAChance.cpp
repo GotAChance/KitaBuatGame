@@ -76,6 +76,9 @@ int GetData();
 void sortHighscore(int N );
 void swap (int i, int j);
 
+// Modul berikut berfungsi pada fitur help (how to play) //
+void help();
+
 typedef struct{
 	char nama[10];
 	int skor;
@@ -110,9 +113,9 @@ void tampilMenu(){
 	printf("\t\t\t\t\t|         #  #  #  #####  #   #  #####          |\n");
 	printf("\t\t\t\t\t|                                               |\n");
 	printf("\t\t\t\t\t|                 SOS GotAChange                |\n");
-	printf("\t\t\t\t\t|      ===================================      |\n");
-	printf("\t\t\t\t\t|        PLAY    SCORE    CREDIT    Exit        |\n");
-	printf("\t\t\t\t\t|        (1)      (2)      (3)      (4)         |\n");
+	printf("\t\t\t\t\t|      =====================================    |\n");
+	printf("\t\t\t\t\t|       PLAY   SCORE   HELP   CREDIT   Exit     |\n");
+	printf("\t\t\t\t\t|       (1)     (2)    (3)     (4)     (5)      |\n");
 	printf("\t\t\t\t\t|                                               |\n");
 	printf("\t\t\t\t\t|_______________________________________________|");
 	printf("\n\n\n\t\t\t\t\t\t inputkan angka (1,2,3, Atau 4) : ");
@@ -124,11 +127,31 @@ int inputMenu(int input){
 	switch (input){
 		case 1: Play();break;
 		case 2: highscore();break;
-		case 3: kredit();break;
-		case 4: Exit();break;
+		case 3: help();break;
+		case 4: kredit();break;
+		case 5: Exit();break;
 		default : printf("\nInput angka harus 1,2,atau 3!\n");system("pause");tampilMenu();break;
 	}
 	return input;
+}
+
+void help(){
+	system("cls");
+	char isi[255];
+    FILE *fptr;
+
+    if ((fptr = fopen("filehelp.txt","r")) == NULL){
+        return;
+    }
+
+    while(fgets(isi, sizeof(isi), fptr)){
+        printf("%s", isi);
+    }
+
+    fclose(fptr);
+    printf("\n\nKLIK APAPUN UNTUK KEMBALI KE MENU!\n");
+    system("pause");
+    tampilMenu();
 }
 
 void kredit(){

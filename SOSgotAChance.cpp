@@ -118,7 +118,7 @@ void tampilMenu(){
 	printf("\t\t\t\t\t|       (1)     (2)    (3)     (4)     (5)      |\n");
 	printf("\t\t\t\t\t|                                               |\n");
 	printf("\t\t\t\t\t|_______________________________________________|");
-	printf("\n\n\n\t\t\t\t\t\t inputkan angka (1,2,3, Atau 4) : ");
+	printf("\n\n\n\t\t\t\t\t\t inputkan angka (1,2,3,4, atau 5) : ");
 	inputMenu(input);
 }
 

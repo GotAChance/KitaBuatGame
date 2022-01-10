@@ -751,7 +751,7 @@ void gameover(){
 
 void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
-		printf("\n\t\t\t\t\tSELAMAT ANDA MENANG! \n");
+		printf("\n\t\t\t\t\t   SELAMAT ANDA MENANG! \n");
 		system("pause");
 	}else if (skor1==skor2){
 		printf("\n\t\t\t\t\tMANTAP SKOR MASIH IMBANG! \n");
@@ -764,13 +764,13 @@ void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]){
 
 void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
-		printf("\n\t\t\t\t\tSELAMAT %s MENANG! \n", nama1);
+		printf("\n\t\t\t\t\t  SELAMAT %s MENANG! \n", nama1);
 		system("pause");
 	}else if (skor1==skor2){
 		printf("\n\t\t\t\t\tMANTAP SKOR MASIH IMBANG! \n");
 		system("pause");
 	}else{
-		printf("\n\t\t\t\t\tSELAMAT %s MENANG! \n", nama2);
+		printf("\n\t\t\t\t\t  SELAMAT %s MENANG! \n", nama2);
 		system("pause");
 	}	
 }

@@ -770,7 +770,7 @@ void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]){
 		printf("\n\t\t\t\t\tMANTAP SKOR MASIH IMBANG! \n");
 		system("pause");
 	}else{
-		printf("\n\t\t\t\t\t SELAMAT %s MENANG! \n", nama2);
+		printf("\n\t\t\t\t\tSELAMAT %s MENANG! \n", nama2);
 		system("pause");
 	}	
 }

@@ -1,0 +1,19 @@
+How To Play!
+
+1. User diminta untuk memilih lawan bermain.
+   input "1" untuk melawan bot, dan input "2" untuk melawan player
+2. Jika melawan bot maka selanjutnya user diminta untuk memilih level
+   input "1" untuk level mudah (3x3), "2" level sedang (5x5), dan "3" level sulit (6x6)
+3. User diminta untuk menginputkan nama yang jumlah maksimal karakternya yaitu 6
+   Jika mode yang bermain melawan player, maka input nama 2 kali (nama player1 dan player2)
+4. Pada saat didalam permainan, pertama tama user diminta untuk menginput huruf S atau O
+   Jika ingin menginputkan hurus S maka input angka 1 dan jika ingin huruf O maka input angka 2
+5. Lalu user diminta untuk menginput posisi angka baris pada papan
+   input angka 1 s/d 3 untuk papan 3x3, input angka 1 s/d 5 untuk papan 5x5, dan input angka 1 s/d 6 untuk papan 6x6
+6. Selanjutnya user diminta untuk menginput posisi angka kolom pada papan
+   input angka 1 s/d 3 untuk papan 3x3, input angka 1 s/d 5 untuk papan 5x5, dan input angka 1 s/d 6 untuk papan 6x6
+7. Jika salah satu player berhasil menyusun kata SOS, baik itu secara vertikal horizontal maupun diagonal
+   maka player tersebut mendapat 1 poin, dan mendapat 1 giliran lagi.
+8. Lakukan langkah ke 4 sampai ke 7 berulang kali sampai papan permainan SOS penuh.
+9. Pemenang ditentukan dengan jumlah skor yang lebih banyak daripada skor lawan
+   jika skor sama berarti imbang.

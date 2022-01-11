@@ -133,7 +133,7 @@ int inputMenu(int input){
 		case 3: help();break;
 		case 4: kredit();break;
 		case 5: Exit();break;
-		default : printf("\nInput angka harus 1,2,atau 3!\n");system("pause");tampilMenu();break;
+		default : printf("\nInput angka harus 1,2,3,4 atau 5!\n");system("pause");tampilMenu();break;
 	}
 	return input;
 }

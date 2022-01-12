@@ -143,7 +143,7 @@ int inputMenu(int input){
 		case 3: help();break;
 		case 4: kredit();break;
 		case 5: Exit();break;
-		default : printf("\nInput angka harus 1,2,3,4 atau 5!\n");system("pause");tampilMenu();break;
+		default : printf("\nInput angka harus 1,2,3,4 atau 5!\n");system("pause");tampilMenu();break; // jika input bukan merupakan angka 1-5 //
 	}
 	return input;
 }
@@ -241,6 +241,10 @@ int inputChooseYourEnemy(int input){
 	}
 	if(input==2){
 		playPlayervsPlayer();
+	}else{ // jika input bukan merupakan angka 1 atau 2 //
+		printf("\ninput harus berupa angka 1 atau 2!\n");
+		system("pause");
+		Play();
 	}
 	return input;
 }
@@ -634,7 +638,7 @@ void EnterYourName(){
 	printf("\t\t\t\t\t|________________________________________________|\n");
 	printf("\t\t\t\t\t                  (Maks 6 Huruf)                \n\t\t\t\t\t\t\t      ");
 	scanf("%s", &player1.nama);
-	if (strlen(player1.nama)>6){
+	if (strlen(player1.nama)>6){ // jika ternyata jumlah karakter input namanya melebihi 6 karakter //
 		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 6!\n");
 		system("pause");
 		EnterYourName();
@@ -834,26 +838,26 @@ void gameover(){
 
 // menampilkan siapa pemenangnya di mode player vs komputer //
 void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]){
-	if (skor1>skor2){
+	if (skor1>skor2){ // user/player1 menang //
 		printf("\n\t\t\t\t\t   SELAMAT ANDA MENANG! \n");
 		system("pause");
-	}else if (skor1==skor2){
+	}else if (skor1==skor2){ // skor seri //
 		printf("\n\t\t\t\t\tMANTAP SKOR MASIH IMBANG! \n");
 		system("pause");
-	}else{
+	}else{ // komputer menang //
 		printf("\n\t\t\t\t\tYAHH ANDA KURANG BERUNTUNG... \n", nama2);
 		system("pause");
 	}
 }
 // menampilkan siapa pemenangnya di mode player vs player //
 void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]){
-	if (skor1>skor2){
+	if (skor1>skor2){ // player 1 menang // 
 		printf("\n\t\t\t\t\t  SELAMAT %s MENANG! \n", nama1);
 		system("pause");
-	}else if (skor1==skor2){
+	}else if (skor1==skor2){ // skor seri //
 		printf("\n\t\t\t\t\tMANTAP SKOR MASIH IMBANG! \n");
 		system("pause");
-	}else{
+	}else{ // player 2 menang //
 		printf("\n\t\t\t\t\t  SELAMAT %s MENANG! \n", nama2);
 		system("pause");
 	}	
@@ -867,7 +871,7 @@ void UIinputnama1(){
 	printf("\t\t\t\t\t|________________________________________________|\n");
 	printf("\t\t\t\t\t                  (Maks 6 huruf)              \n\t\t\t\t\t\t\t      ");
 	scanf("%s", &player1.nama);
-	if (strlen(player1.nama)>6){
+	if (strlen(player1.nama)>6){ // jika ternyata jumlah karakter input namanya melebihi 6 karakter //
 		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 6!\n");
 		system("pause");
 		UIinputnama1();
@@ -882,7 +886,7 @@ void UIinputnama2(){
 	printf("\t\t\t\t\t|________________________________________________|\n");
 	printf("\t\t\t\t\t                  (Maks 6 huruf)              \n\t\t\t\t\t\t\t      ");
 	scanf("%s", &player2.nama);
-	if (strlen(player2.nama)>6){
+	if (strlen(player2.nama)>6){ // jika ternyata jumlah karakter input namanya melebihi 6 karakter //
 		printf("\n\t\t\t\t\t\t      Jumlah Karakter Maks 6!\n");
 		system("pause");;
 		UIinputnama2();
@@ -932,7 +936,7 @@ int cekPosisiInput(int m, int n, int k,char papan[][6], int CekSudahBenar){
    		 papan[m][n]=k;	
    		 CekSudahBenar=0;
    		 return CekSudahBenar;
-	}else {
+	}else { // jika ternyata kotak sudah diisi //
 		printf("\nMAAF KOTAK SUDAH DIISI\n");
 		system("pause");
 		CekSudahBenar=1;
@@ -950,7 +954,7 @@ int ketikSO (int inputSO, int k){
 	}else if (inputSO==9){ // jika input=9 maka back to menu //
 		tampilMenu();
 	}
-	else{
+	else{ // jika input bukan merupakan angka 1 atau 2 atau juga bukan 9 //
 		printf("\nERROR (INPUT HARUS ANGKA 1 ATAU 2)\n");
 		system("pause");
 		ketikSO (inputSO,k);
@@ -968,7 +972,7 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 		}else if (inputBaris == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}
-		else{
+		else{ // jika input bukan merupakan angka 1-3 atau bukan 9 //
 			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-3)\n");
 			system("pause");
 			ketikBaris(inputBaris,m,inputLevel);	
@@ -983,7 +987,7 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 		}else if (inputBaris == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}
-		else{
+		else{ // jika input bukan merupakan angka 1-5 atau bukan 9 //
 			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-5)\n");
 			system("pause");
 			ketikBaris(inputBaris,m,inputLevel);	
@@ -997,7 +1001,7 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
     		return m;
 		}else if (inputBaris == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
-		}else{
+		}else{ // jika input bukan merupakan angka 1-6 atau bukan 9 //
 			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-6)\n");
 			system("pause");
 			ketikBaris(inputBaris,m,inputLevel);	
@@ -1015,7 +1019,7 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
     		return n;
 		}else if (inputKolom == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
-		}else{
+		}else{ // jika input bukan merupakan angka 1-3 atau bukan 9 //
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-3)\n");
 			system("pause");
 			ketikKolom(inputKolom,n,inputLevel);
@@ -1029,7 +1033,7 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
     		return n;
 		}else if (inputKolom == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
-		}else{
+		}else{ // jika input bukan merupakan angka 1-5 atau bukan 9 //
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-5)\n");
 			system("pause");
 			ketikKolom(inputKolom,n,inputLevel);
@@ -1043,7 +1047,7 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
     		return n;
 		}else if (inputKolom == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
-		}else{
+		}else{ // jika input bukan merupakan angka 1-6 atau bukan 9 //
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-6)\n");
 			system("pause");
 			ketikKolom(inputKolom,n,inputLevel);

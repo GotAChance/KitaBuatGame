@@ -110,6 +110,7 @@ int main(){
 	return 0;
 }
 
+// UI tampil Menu //
 void tampilMenu(){
 	int input;
 	system("cls");
@@ -132,9 +133,11 @@ void tampilMenu(){
 	inputMenu(input);
 }
 
+// input di fitur Menu //
 int inputMenu(int input){
 	scanf("%d", &input);
 	switch (input){
+		/* Pemilihan Menu */
 		case 1: Play();break;
 		case 2: highscore();break;
 		case 3: help();break;
@@ -145,15 +148,17 @@ int inputMenu(int input){
 	return input;
 }
 
+// Menampilkan fitur help (how to play) //
 void help(){
 	system("cls");
 	char isi[255];
     FILE *fptr;
-
+    
     if ((fptr = fopen("filehelp.txt","r")) == NULL){
-        return;
+       tampilMenu(); // jika isi file kosong maka kembali ke menu //
     }
-
+    
+	 // buka isi filehelp //
     while(fgets(isi, sizeof(isi), fptr)){
         printf("%s", isi);
     }
@@ -164,6 +169,7 @@ void help(){
     tampilMenu();
 }
 
+// menampilkan fitur kredit //
 void kredit(){
 	system("cls");
 	printf("\t\t\t\t\t\t _______________________________\n");
@@ -177,6 +183,7 @@ void kredit(){
 	tampilMenu();
 }
 
+// menampilkan fitur exit //
 void Exit(){
 	int input;
 	system("cls");
@@ -191,12 +198,13 @@ void Exit(){
 	inputExit(input);
 }
 
+// input di fitur exit //
 int inputExit(int input){
 	scanf("%d", &input);
 	if(input==2){
 		tampilMenu();
 	}
-	if(input!=1 && input!=2){
+	if(input!=1 && input!=2){ // jika input bukan berupa angka 1 atau 2 //
 		printf("\nInput harus berupa angka 1 atau 2!\n");
 		system("pause");
 		Exit();
@@ -204,6 +212,7 @@ int inputExit(int input){
 	return input;
 }
 
+// tampil UI fitur pilih mode lawan //
 void Play(){
 	int input;
 	system("cls");
@@ -224,6 +233,7 @@ void Play(){
 	inputChooseYourEnemy(input);
 }
 
+// input di fitur pilih mode lawan //
 int inputChooseYourEnemy(int input){
 	scanf("%d", &input);
 	if(input==1){
@@ -235,15 +245,17 @@ int inputChooseYourEnemy(int input){
 	return input;
 }
 
+// untuk menampilkan UI fitur highscore //
 void highscore(){
 	int i,N;
-	N = GetData();
+	N = GetData(); // N merupakah variabel untuk menampung banyaknya data pada file highscore //
 	system("cls");
-	sortHighscore(N);
+	sortHighscore(N); 
 	printf("Daftar HighScore!\n\n");
 	printf("\t\t\t\t        NAMA   SKOR \n");
 	printf("\t\t\t\t\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd");
 	printf("\n");
+	// menampilkan data highscore yang sudah di sorting //
 	for (i=0 ; i<N; i++){
 		printf("\t\t\t\t\t%-6s\t",list[i].nama);
 		printf(" %d",list[i].skor);
@@ -254,6 +266,7 @@ void highscore(){
 	tampilMenu();	
 }
 
+// memasukan data pemain (nama,dan skor) yang menang di mode player vs komputer //
 void writeData1(){
 	if (player1.skor>player2.skor){
 		strcpy(data.nama,player1.nama);
@@ -265,26 +278,28 @@ void writeData1(){
 	}
 }
 
+// memasukan data pemain (nama,dan skor) yang menang di mode player vs player //
 void writeData2(){
-	if (player1.skor>player2.skor){
+	if (player1.skor>player2.skor){ // jika skor player 1 lebih tinggi dari player 2 //
 		strcpy(data.nama,player1.nama);
 		data.skor=player1.skor;
 		
 		FILE *fp = fopen(HIGHSCORE_FILENAME, "ab");
 		fwrite(&data, sizeof(Highscore), 1, fp);
 		fclose(fp);	
-	}else if (player2.skor>player1.skor){
+	}else if (player2.skor>player1.skor){ // jika skor player 2 lebih tinggi dari player 1 //
 		strcpy(data.nama,player2.nama);
 		data.skor=player2.skor;
 		
 		FILE *fp = fopen(HIGHSCORE_FILENAME, "ab");
 		fwrite(&data, sizeof(Highscore), 1, fp);
 		fclose(fp);	
-	}else{
+	}else{ // jika seri return //
 		return ;
 	}
 }
 
+// membaca data dan menghitung isi data di file highscore //
 int GetData() {
 	int N = 0;
 	FILE *fp = fopen(HIGHSCORE_FILENAME, "rb");
@@ -293,6 +308,7 @@ int GetData() {
 	return N;
 }
 
+// mengurutkan data berdasarkan skor tertinggi ke terendah //
 void sortHighscore(int N ) {
 	int i, j ;
 	for ( i = 0 ; i < N-1 ; i++ ){
@@ -304,6 +320,7 @@ void sortHighscore(int N ) {
 	}
 }
 
+// menukar posisi list //
 void swap (int i, int j){
 	temp = list[j] ;
 	list[j] = list[i];
@@ -314,6 +331,7 @@ void swap (int i, int j){
 //                                                             MODE PLAYER VS KOMPUTER                                                                           //
 // ===============================================================================================================================================================//
 
+// Modul untuk menampung semua modul yang berjalan di mode player vs komputer //
 void playPlayervsKomputer(){
 	/* Kamus Data */
 	int inputLevel; // variabel untuk inputLevel yang diinginkan //
@@ -338,9 +356,10 @@ void playPlayervsKomputer(){
 	player2.nama[2]='T';
 	
 	/* Algoritma */
-	EnterYourName();
-	ChooseLevel();
-	inputLevel=inputChooseYourLevel(inputLevel);
+	EnterYourName(); // input nama player //
+	ChooseLevel(); // tampil UI fitur pilih level // 
+	inputLevel=inputChooseYourLevel(inputLevel); // input level permainan (3x3), (5x5), dan (6x6) // 
+	// inisialisasi papan //
 	switch (inputLevel){
 		case 1 :
 			for (i=0;i<3;i++){
@@ -361,57 +380,68 @@ void playPlayervsKomputer(){
 				}
 			}Level3(player,papan);break;
 	}
+		// mulai perulangan permainan sampai papan penuh //
 		do{
-		tempatSkorPlayer2=player2.skor;
+		tempatSkorPlayer2=player2.skor; // tempatSkorPlayer2 adalah variabel untuk menampung skor player 2 //
+		// player di mod kan dengan 2 agar player 1 dan player 2 dapat saling bertukar giliran //
 		if (player%2==1){
      	  	player=1;
 		}else{
 			player=2;
 		}
+		// tampilkan papan sesuai input level yang dipilih //
 		switch (inputLevel){
 		case 1 : Level1(player,papan);break;
 		case 2 : Level2(player,papan);break;
 		case 3 : Level3(player,papan);break; 
 		}
-		if (player==1){
-			k=ketikSO (inputSO, k);
-			m=ketikBaris(inputBaris, m,inputLevel);
-			n=ketikKolom(inputKolom, n,inputLevel);
+		if (player==1){ // jika player=1 (manusia/user) //
+		// k,m,n merupakah variabel variabel yang digunakan untuk input user //
+			k=ketikSO (inputSO, k); // input angka 1 untuk S, angka 2 untuk O // 
+			m=ketikBaris(inputBaris, m,inputLevel); // input posisi baris //
+			n=ketikKolom(inputKolom, n,inputLevel); // input posisi kolom //
+			
+			// cek posisi berguna untuk mengecek apakah player sudah benar menginputkan di kotak yang kosong atau belum//
 			CekPosisi=cekPosisiInput(m, n, k, papan, CekSudahBenar);
 			if (CekPosisi==1){
-				player--;
-				cekPenuh--;
+				player--; // jika player malah menginput di kotak yang ada huruf S atau O maka giliran player tersebut diulang lagi dengan fungsi player-- //
+				cekPenuh--; // cekPenuh pun akan berkurang jika user salah input//
 			}	
+			// cek skor apakah player berhasil medapatkan kata SOS atau tidak, lalu jika iya maka pada kondisi player=1 maka skor player 1 bertambah //
 			if (cekSkor(m,n,k,papan,j)>0 && CekPosisi==0){
 				player1.skor = player1.skor + cekSkor (m,n,k,papan,j);
-				player--;
+				player--; // player-- maka player1 akan mendapat giliran lagi jika berhasil menyusun kata SOS //
 			}		
 		}
-		if (player==2){
-			komputer_gerak(ii,  jj,  k,  j,  papan);
-			if (player2.skor>tempatSkorPlayer2){
-				player--;	
+		if (player==2){ // jika player=2 (komputer) //
+			komputer_gerak(ii,  jj,  k,  j,  papan); // kecerdasan buatan / algoritma bot berjalan //
+			if (player2.skor>tempatSkorPlayer2){ // kondisi ini digunakan jika komputer berhasil mendapatkan skor, dengan cara kerjanya yaitu membandingkan skor komputer dengan skor komputer sebelum bertambah //
+				player--; // player-- , maka palyer 2 akan mendapat giliran lagi jika berhasil menyusun kata SOS //
 			}
-			printf("\nKLIK ENTER UNTUK MELANJUTKAN !\n");
+			printf("\nKLIK ENTER UNTUK MELANJUTKAN !\n"); // jeda dulu untuk melanjutkan
 			system("pause");
 		}
 		player++;
     	cekPenuh++;
-    	penanda=cekKotakPenuh(cekPenuh,i,j);
+    	penanda=cekKotakPenuh(cekPenuh,i,j); // penanda berfungsi untuk mengecek apakah papan sudah poenuh atau belum, jika sudah maka keluar while //
 	}while (penanda != 0);
-	writeData1();
-	gameover();
-	CekWin1(player1.skor,player2.skor,player1.nama,player2.nama);
-	Retry();
+	writeData1(); // menyimpan data user jika menang untuk keperluan highscore //
+	gameover(); // tampil UI gameover // 
+	CekWin1(player1.skor,player2.skor,player1.nama,player2.nama); //menampilkan siapakah pemenangnya //
+	Retry(); // menampilkan UI fitur retry //
 }
 
+// modul algoritma komputer //
 void komputer_gerak(int ii, int jj, int k, int j, char papan[6][6]){
 	while (1){
+		// komputer mencari kata ss di papan //
 		if (komputer_cari_ss( ii, jj, j,  papan)==1){
 			break;
+		// komputer mencari kata os di papan //
 		}else if (komputer_cari_os(ii, jj, j, papan)==1){
 			break;
 		}
+		// jika tidak ada maka random //
 		else{
 			komputer_cari_kotak_kosong(ii, jj, k, j, papan);break;
 		}
@@ -420,17 +450,18 @@ void komputer_gerak(int ii, int jj, int k, int j, char papan[6][6]){
 
 
 void  komputer_cari_kotak_kosong(int ii, int jj, int k, int j, char papan[6][6]){
-	int random;
+	int random; // random menampung variabel random //
+	            // j merupakah variabel untuk menampung besarnya kolom papan //
 	k=rand()%2;
 	if (k==1){
-		k=83;
+		k=83; // k variabel untuk menampung simbol S atau O //
 	}else{
 		k=79;
 	}
 	while (1){
-		random=rand()%((j*j)+1);
-		ii=(random-1)/j;
-		jj=(random-1)%j;
+		random=rand()%((j*j)+1); // (j*j)+1, ditambah 1 karena untuk menghindari angka random=0 //
+		ii=(random-1)/j; // ii merupakah variabel untuk menampung baris //
+		jj=(random-1)%j; // jj merupakan variabel untuk menampung kolom //
 		
 		if (papan[ii][jj]==' '){
 			papan[ii][jj]=k;
@@ -438,20 +469,26 @@ void  komputer_cari_kotak_kosong(int ii, int jj, int k, int j, char papan[6][6])
 		}
 	}
 	if (cekSkor(ii,jj,k,papan,j)>0){
-		player2.skor = player2.skor + cekSkor (ii,jj,k,papan,j);
+		player2.skor = player2.skor + cekSkor (ii,jj,k,papan,j); // menambah skor player2 (bot) jika berhasil menyusun kata SOS //
 	}
 }
 
 
 int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
+	/* ii merupakah variabel untuk menampung baris
+	   jj merupakan variabel untuk menampung kolom
+	   j merupakah variabel untuk menampung besarnya kolom papan 
+	   simbol  variabel untuk menampung simbol S atau O */
 	int simbol;
 	for (ii=0; ii<j; ii++){
         for(jj=0; jj<j; jj++){  
+        // fungsi (jj!=0) untuk mencegah terjadinya indeks kolom minus //
+        // fungsi (jj!=j-1) untuk mencegah terjadinya indeks kolom yang melebihi j //
 				if((jj!=0) && (jj!=j-1) && (papan[ii][jj+1]=='S') && (papan[ii][jj-1] == 'S') && papan[ii][jj]==' '){
-					simbol=79;
+					simbol=79; // simbol 79, isi simbol dengan huruf O //
 					papan[ii][jj]=simbol;
 					if (cekSkor(ii,jj,simbol,papan,j)>0){
-						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
                 }
@@ -459,7 +496,7 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
 					simbol=79;
 					papan[ii][jj]=simbol;
 					if (cekSkor(ii,jj,simbol,papan,j)>0){
-						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
                 }
@@ -467,7 +504,7 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
 					simbol=79;
 					papan[ii][jj]=simbol;
 					if (cekSkor(ii,jj,simbol,papan,j)>0){
-						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
                 }
@@ -475,7 +512,7 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
 					simbol=79;
 					papan[ii][jj]=simbol;
 					if (cekSkor(ii,jj,simbol,papan,j)>0){
-						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
                 }
@@ -486,14 +523,20 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
 
 
 int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
+	/* ii merupakah variabel untuk menampung baris
+	   jj merupakan variabel untuk menampung kolom
+	   j merupakah variabel untuk menampung besarnya kolom papan 
+	   simbol  variabel untuk menampung simbol S atau O */
 	int simbol;
 	for (ii=0;ii<j;ii++){
 		for (jj=0;jj<j;jj++){
+		// fungsi (jj!=0) untuk mencegah terjadinya indeks kolom minus //
+        // fungsi (jj!=j-1) untuk mencegah terjadinya indeks kolom yang melebihi j //
 			if ((jj!=j-1) && (papan[ii][jj+1]=='O') && (papan[ii][jj+2]=='S') && papan[ii][jj]==' '){
-				simbol=83;
+				simbol=83; // simbol 83, isi simbol dengan huruf S // 
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
 				return 1;
 			}
@@ -501,7 +544,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             	simbol=83;
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
             }
@@ -509,7 +552,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
         		simbol=83;
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
 				return 1;
 			}
@@ -517,7 +560,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             	simbol=83;
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
             }
@@ -525,7 +568,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
 				simbol=83;
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
             }
@@ -533,7 +576,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             	simbol=83;
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
             }
@@ -541,7 +584,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             	simbol=83;
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
             }
@@ -549,7 +592,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             	simbol=83;
 				papan[ii][jj]=simbol;
 				if (cekSkor(ii,jj,simbol,papan,j)>0){
-					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j);
+					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
             }
@@ -558,7 +601,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
 	return 0;
 }
 
-
+// UI fitur pilih level //
 void ChooseLevel(){
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
@@ -577,11 +620,13 @@ void ChooseLevel(){
 	printf("\t\t\t\t\t|________________________________________________|\n");
 }
 
+// input di fitur level //
 int inputChooseYourLevel(int input){
 	scanf("%d", &input);
 	return input;
 }
 
+// menampilkan UI dan menginputkan nama di mode player vs komputer //
 void EnterYourName(){
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
@@ -596,12 +641,13 @@ void EnterYourName(){
 	}
 }
 
+// tampil papan 3x3 //
 void Level1(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
-	if (player==1){
+	if (player==1){ // jika player=1, maka setting warna menjadi warna aqua //
 		setwarna(11);
-	}else{
+	}else{ // jika player bukan sama dengan 1, maka setting warna menjadi warna hijau //
 		setwarna(10);
 	}
 	printf("input 9 untuk kembali ke menu!\n");	
@@ -627,12 +673,13 @@ void Level1(int player, char papan[6][6]){
     printf("SEKARANG GILIRAN PLAYER %d\n", player);
 }
 
+// tampil papan 5x5 //
 void Level2(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
-	if (player==1){
+	if (player==1){ // jika player=1, maka setting warna menjadi warna aqua //
 		setwarna(11);
-	}else{
+	}else{ // jika player bukan sama dengan 1, maka setting warna menjadi warna hijau //
 		setwarna(10);
 	}
 	printf("input 9 untuk kembali ke menu!\n");
@@ -664,13 +711,13 @@ void Level2(int player, char papan[6][6]){
     printf("SEKARANG GILIRAN PLAYER %d\n", player);
 }
 
-
+// tampil papan 6x6 // 
 void Level3(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
-	if (player==1){
+	if (player==1){ // jika player sama dengan 1, maka setting warna menjadi warna aqua //
 		setwarna(11);
-	}else{
+	}else{ // jika player bukan sama dengan 1, maka setting warna menjadi warna hijau //
 		setwarna(10);
 	}
 	printf("input 9 untuk kembali ke menu!\n");
@@ -709,6 +756,7 @@ void Level3(int player, char papan[6][6]){
 //                                                             MODE PLAYER VS PLAYER                                                                              //
 // ===============================================================================================================================================================//
 
+// Modul untuk menampung semua modul yang berjalan di mode player vs player //
 void playPlayervsPlayer(){
 	/* Kamus Data */
 	int inputSO, inputKolom, inputBaris; // ketiga variabel ini sama fungsi nya seperti m,n,k cuman belum di kurangi aja //
@@ -726,47 +774,57 @@ void playPlayervsPlayer(){
 	player2.skor=0;
 	
 	/* Algoritma */
+	// Inputkan nama player 1 dan player 2 //
 	UIinputnama1();
 	UIinputnama2();
+	// inisialisasi isi papan //
 	for (i=0;i<6;i++){
 		for (j=0;j<6;j++){
 			papan[i][j]=' ';
 		}
 	}
+	// mulai perulangan permainan sampai papan penuh //
 	do {
+		// player di mod kan dengan 2 agar player 1 dan player 2 dapat saling bertukar giliran //
     	if (player%2==1){
      	  	player=1;
 		}else{
 			player=2;
 		}
-		Level3(player, papan);
-		k=ketikSO (inputSO, k);
-		m=ketikBaris(inputBaris, m,inputLevel);
-		n=ketikKolom(inputKolom, n,inputLevel);	
+		Level3(player, papan);  // Papan otomatis ke yang 6x6 untuk mode player vs player //
+		
+		// k,m,n merupakah variabel variabel yang digunakan untuk input user //
+		k=ketikSO (inputSO, k); // input angka 1 untuk S, angka 2 untuk O // 
+		m=ketikBaris(inputBaris, m,inputLevel); // input posisi baris //
+		n=ketikKolom(inputKolom, n,inputLevel);	 // input posisi kolom //
+		
+		// cek posisi berguna untuk mengecek apakah player sudah benar menginputkan di kotak yang kosong atau belum//
 		CekPosisi=cekPosisiInput(m, n, k, papan, CekSudahBenar);
 		if (CekPosisi==1){
-			player--;
-			cekPenuh--;
+			player--; // jika player malah menginput di kotak yang ada huruf S atau O maka giliran player tersebut diulang lagi dengan fungsi player-- //
+			cekPenuh--; // cekPenuh pun akan berkurang jika user salah input//
 		}
+		// cek skor apakah player berhasil medapatkan kata SOS atau tidak, lalu jika iya maka pada kondisi player=1 maka skor player 1 bertambah, jika player 2 maka skor player 2 bertambah //
     	if (cekSkor(m,n,k,papan,j)>0 && CekPosisi==0){
     		if (player==1){
     			player1.skor = player1.skor + cekSkor(m,n,k,papan,j);
-    			player--;
+    			player--; // player-- maka player1 akan mendapat giliran lagi jika berhasil menyusun kata SOS //
 			}else if (player==2){
 				player2.skor = player2.skor + cekSkor(m,n,k,papan,j);
-				player--;
+				player--; // player-- maka player2 akan mendapat giliran lagi jika berhasil menyusun kata SOS //
 			}
 		}
 		player++;
     	cekPenuh++;
-    	penanda=cekKotakPenuh(cekPenuh,i,j);
+    	penanda=cekKotakPenuh(cekPenuh,i,j); // penanda berfungsi untuk mengecek apakah papan sudah poenuh atau belum, jika sudah maka keluar while //
 	}while (penanda!=0);
-	writeData2();
-	gameover();
-	CekWin2(player1.skor,player2.skor,player1.nama,player2.nama);
-	Retry();
+	writeData2(); // menyimpan data pemain yang menang untuk keperluan highscore //
+	gameover(); // tampil UI gameover // 
+	CekWin2(player1.skor,player2.skor,player1.nama,player2.nama); //menampilkan siapakah pemenangnya //
+	Retry(); // menampilkan UI fitur retry //
 }
 
+// UI gameover //
 void gameover(){
 	system("cls");
 	printf("\t\t\t\t\t _______________________\n");
@@ -774,6 +832,7 @@ void gameover(){
 	printf("\t\t\t\t\t|_______________________|\n");
 }
 
+// menampilkan siapa pemenangnya di mode player vs komputer //
 void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
 		printf("\n\t\t\t\t\t   SELAMAT ANDA MENANG! \n");
@@ -786,7 +845,7 @@ void CekWin1(int skor1, int skor2, char nama1[10], char nama2[10]){
 		system("pause");
 	}
 }
-
+// menampilkan siapa pemenangnya di mode player vs player //
 void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]){
 	if (skor1>skor2){
 		printf("\n\t\t\t\t\t  SELAMAT %s MENANG! \n", nama1);
@@ -800,7 +859,7 @@ void CekWin2(int skor1, int skor2, char nama1[10], char nama2[10]){
 	}	
 }
 
-
+// UI tampilan dan input nama player 1, di mode player vs player //
 void UIinputnama1(){
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
@@ -815,6 +874,7 @@ void UIinputnama1(){
 	}
 }
 
+// UI tampilan dan input nama player 2, di mode player vs player //
 void UIinputnama2(){
 	system("cls");
 	printf("\t\t\t\t\t ________________________________________________\n");
@@ -829,6 +889,7 @@ void UIinputnama2(){
 	}
 }
 
+// UI retry //
 void Retry(){
 	int inputRetry;
 	system("cls");
@@ -844,6 +905,7 @@ void Retry(){
 	inputDiRetry(inputRetry);
 }
 
+// input di fitur retry //
 void inputDiRetry(int inputRetry){
 	scanf("%d", &inputRetry);
 	switch (inputRetry){
@@ -853,16 +915,18 @@ void inputDiRetry(int inputRetry){
 	}
 }
 
+// Modul mengecek apakah kota sudah penuh atau belum //
 int cekKotakPenuh(int cekPenuh, int i, int j){
 	int penanda;
-	if (cekPenuh==(i*j)){
+	if (cekPenuh==(i*j)){ // jika cekpenuh = banyaknya isi papan, maka penanda = 0 (berarti keluar permainan) //
 		penanda=0;
 	}else {
-		penanda=1;
+		penanda=1; // jika cekpenuh tidak sama dengan banyaknya isi papan, maka penanda = 1 (masih di dalam permainan) //
 	}
 	return penanda;
 }
 
+// Modul untuk mengecek posisi input user apakah sudah benar di kotak yang kosong atau tidak //
 int cekPosisiInput(int m, int n, int k,char papan[][6], int CekSudahBenar){
     if (papan[m][n]==' '){
    		 papan[m][n]=k;	
@@ -876,13 +940,14 @@ int cekPosisiInput(int m, int n, int k,char papan[][6], int CekSudahBenar){
 	}
 }
 
+// Modul untuk huruf S atau O, input angka 1 untuk S, input angka 2 untuk O //
 int ketikSO (int inputSO, int k){
 	printf("\t\t\t\t\t  Ketikan Angka 1 untuk (S) atau angka 2 untuk (O) :");
 	scanf("%d", &inputSO);
 	if (inputSO==1 || inputSO==2){
 		k=OlahInputSO (inputSO);
    		return k;
-	}else if (inputSO==9){
+	}else if (inputSO==9){ // jika input=9 maka back to menu //
 		tampilMenu();
 	}
 	else{
@@ -892,14 +957,15 @@ int ketikSO (int inputSO, int k){
 	}
 }
 
+// Modul untuk menginput posisi baris dari user //
 int ketikBaris(int inputBaris, int m, int inputLevel){
-	if (inputLevel==1){
+	if (inputLevel==1){ // jika di level 1 (papan 3x3) //
 		printf("\n\t\t\t\t\t  Masukan Posisi Baris (Angka 1-3):");
 		scanf("%d", &inputBaris);
 		if (inputBaris>=1 && inputBaris<=3){
 	    	m=OlahInputBaris (inputBaris);
     		return m;
-		}else if (inputBaris == 9){
+		}else if (inputBaris == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}
 		else{
@@ -908,13 +974,13 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 			ketikBaris(inputBaris,m,inputLevel);	
 		}
 	}
-	else if (inputLevel==2){
+	else if (inputLevel==2){ // jika di level 2 (papan 5x5) //
 		printf("\n\t\t\t\t\t  Masukan Posisi Baris (Angka 1-5):");
 		scanf("%d", &inputBaris);
 		if (inputBaris>=1 && inputBaris<=5){
 	    	m=OlahInputBaris (inputBaris);
     		return m;
-		}else if (inputBaris == 9){
+		}else if (inputBaris == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}
 		else{
@@ -923,13 +989,13 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 			ketikBaris(inputBaris,m,inputLevel);	
 		}
 	}
-	else if (inputLevel==3){
+	else if (inputLevel==3){ // jika di level 3 (papan 6x6) //
 		printf("\n\t\t\t\t\t  Masukan Posisi Baris (Angka 1-6):");
 		scanf("%d", &inputBaris);
 		if (inputBaris>=1 && inputBaris<=6){
 	    	m=OlahInputBaris (inputBaris);
     		return m;
-		}else if (inputBaris == 9){
+		}else if (inputBaris == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-6)\n");
@@ -939,14 +1005,15 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 	}
 }
 
+// Modul untuk menginput posisi kolom dari user //
 int ketikKolom(int inputKolom,int n, int inputLevel){
-	if (inputLevel==1){
+	if (inputLevel==1){ // jika di level 1 (papan 3x3) //
 		printf("\n\t\t\t\t\t  Masukan Posisi Kolom (Angka 1-3):");
 		scanf("%d", &inputKolom);
 		if (inputKolom>=1 && inputKolom<=3){
 			n=OlahInputKolom (inputKolom);
     		return n;
-		}else if (inputKolom == 9){
+		}else if (inputKolom == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-3)\n");
@@ -954,13 +1021,13 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
 			ketikKolom(inputKolom,n,inputLevel);
 		}	
 	}
-	else if (inputLevel==2){
+	else if (inputLevel==2){ // jika di level 2 (papan 5x5) //
 		printf("\n\t\t\t\t\t  Masukan Posisi Kolom (Angka 1-5):");
 		scanf("%d", &inputKolom);
 		if (inputKolom>=1 && inputKolom<=5){
 			n=OlahInputKolom (inputKolom);
     		return n;
-		}else if (inputKolom == 9){
+		}else if (inputKolom == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-5)\n");
@@ -968,13 +1035,13 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
 			ketikKolom(inputKolom,n,inputLevel);
 		}	
 	}
-	else if (inputLevel==3){
+	else if (inputLevel==3){ // jika di level 3 (papan 6x6) //
 		printf("\n\t\t\t\t\t  Masukan Posisi Kolom (Angka 1-6):");
 		scanf("%d", &inputKolom);
 		if (inputKolom>=1 && inputKolom<=6){
 			n=OlahInputKolom (inputKolom);
     		return n;
-		}else if (inputKolom == 9){
+		}else if (inputKolom == 9){ // jika input=9 maka back to menu //
 			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-6)\n");
@@ -984,10 +1051,16 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
 	}
 }
 
-
+// Modul cek kata SOS //
 int cekSkor(int m,int n,int k,char papan[6][6],int j){
-	int skor=0;
-	if (k==83){
+	/* variabel m untuk menampung indeks baris
+	   variabel n untuk menampung indeks kolom
+	   variabel k untuk menampung simbol S atau O
+	   variabel j untuk menampung panjangnya kolom papan */
+	int skor=0; // set awal skor=0 //
+	if (k==83){ // simbol 83, isi simbol dengan huruf S // 
+		// fungsi (jj!=0) untuk mencegah terjadinya indeks kolom minus //
+        // fungsi (jj!=j-1) untuk mencegah terjadinya indeks kolom yang melebihi j //
 		if ((n!=0) && (papan[m][n-1])=='O' && (papan[m][n-2])=='S')
 		{
 			skor++;
@@ -1021,7 +1094,7 @@ int cekSkor(int m,int n,int k,char papan[6][6],int j){
             skor++;
         }	
 	}
-    else if (k==79){
+    else if (k==79){ // simbol 79, isi simbol dengan huruf O // 
     	if((papan[m+1][n] == 'S') && (papan[m-1][n] == 'S'))
         {
             skor++;
@@ -1039,9 +1112,10 @@ int cekSkor(int m,int n,int k,char papan[6][6],int j){
             skor++;
         }	
 	}
-	return skor;
+	return skor; // return jumlah skor //
 }
 
+// Modul untuk mengubah inputan angka 1 menjadi huruf S, dan inputan angka 2 menjadi huruf O //
 int OlahInputSO(int x){
 	if(x==1){
 		x=83;
@@ -1051,11 +1125,13 @@ int OlahInputSO(int x){
 	return x;
 }
 
+// Modul untuk mengurangi inputan posisi baris dari user, ini dilakukan karena bahasa C memulai indeks array nya dari 0 //
 int OlahInputBaris(int y){
 	y=y-1;
 	return y;
 }
 
+// Modul untuk mengurangi inputan posisi kolom dari user, ini dilakukan karena bahasa C memulai indeks array nya dari 0 //
 int OlahInputKolom(int z){
 	z=z-1;
 	return z;

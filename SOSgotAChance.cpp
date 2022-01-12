@@ -82,6 +82,12 @@ void help();
 // Modul berikut berfungsi untuk menampilkan fitur gameover //
 void gameover();
 
+// Modul untuk menampilkan warna //
+void setwarna(unsigned short color){
+    HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hCon,color);
+}
+
 typedef struct{
 	char nama[10];
 	int skor;
@@ -97,7 +103,7 @@ StatusPemain player1;
 StatusPemain player2;
 Highscore data,list[100],temp;
 char papan[6][6];
-
+int m,n;
 
 int main(){
 	tampilMenu();
@@ -107,6 +113,7 @@ int main(){
 void tampilMenu(){
 	int input;
 	system("cls");
+	setwarna(15);
 	printf("\t\t\t\t\t _______________________________________________\n");
 	printf("\t\t\t\t\t|                                               |\n");
 	printf("\t\t\t\t\t|         #######  #####  #####  #   #          |\n");
@@ -592,6 +599,12 @@ void EnterYourName(){
 void Level1(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
+	if (player==1){
+		setwarna(11);
+	}else{
+		setwarna(10);
+	}
+	printf("input 9 untuk kembali ke menu!\n");	
 	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
@@ -617,6 +630,12 @@ void Level1(int player, char papan[6][6]){
 void Level2(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
+	if (player==1){
+		setwarna(11);
+	}else{
+		setwarna(10);
+	}
+	printf("input 9 untuk kembali ke menu!\n");
 	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
@@ -649,6 +668,12 @@ void Level2(int player, char papan[6][6]){
 void Level3(int player, char papan[6][6]){
 	system ("mode 100,43");
 	system("cls");
+	if (player==1){
+		setwarna(11);
+	}else{
+		setwarna(10);
+	}
+	printf("input 9 untuk kembali ke menu!\n");
 	printf("\n\n\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
 	printf("\t\t\t\t\t\t\t SOS GotAChance \n");
 	printf("\t\t\t\t\t\t \xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\xcd\n");
@@ -828,7 +853,6 @@ void inputDiRetry(int inputRetry){
 	}
 }
 
-
 int cekKotakPenuh(int cekPenuh, int i, int j){
 	int penanda;
 	if (cekPenuh==(i*j)){
@@ -858,7 +882,10 @@ int ketikSO (int inputSO, int k){
 	if (inputSO==1 || inputSO==2){
 		k=OlahInputSO (inputSO);
    		return k;
-	}else{
+	}else if (inputSO==9){
+		tampilMenu();
+	}
+	else{
 		printf("\nERROR (INPUT HARUS ANGKA 1 ATAU 2)\n");
 		system("pause");
 		ketikSO (inputSO,k);
@@ -872,7 +899,10 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 		if (inputBaris>=1 && inputBaris<=3){
 	    	m=OlahInputBaris (inputBaris);
     		return m;
-		}else{
+		}else if (inputBaris == 9){
+			tampilMenu();
+		}
+		else{
 			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-3)\n");
 			system("pause");
 			ketikBaris(inputBaris,m,inputLevel);	
@@ -884,7 +914,10 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 		if (inputBaris>=1 && inputBaris<=5){
 	    	m=OlahInputBaris (inputBaris);
     		return m;
-		}else{
+		}else if (inputBaris == 9){
+			tampilMenu();
+		}
+		else{
 			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-5)\n");
 			system("pause");
 			ketikBaris(inputBaris,m,inputLevel);	
@@ -896,6 +929,8 @@ int ketikBaris(int inputBaris, int m, int inputLevel){
 		if (inputBaris>=1 && inputBaris<=6){
 	    	m=OlahInputBaris (inputBaris);
     		return m;
+		}else if (inputBaris == 9){
+			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI BARIS HARUS ANGKA ANTARA 1-6)\n");
 			system("pause");
@@ -911,6 +946,8 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
 		if (inputKolom>=1 && inputKolom<=3){
 			n=OlahInputKolom (inputKolom);
     		return n;
+		}else if (inputKolom == 9){
+			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-3)\n");
 			system("pause");
@@ -923,6 +960,8 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
 		if (inputKolom>=1 && inputKolom<=5){
 			n=OlahInputKolom (inputKolom);
     		return n;
+		}else if (inputKolom == 9){
+			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-5)\n");
 			system("pause");
@@ -935,6 +974,8 @@ int ketikKolom(int inputKolom,int n, int inputLevel){
 		if (inputKolom>=1 && inputKolom<=6){
 			n=OlahInputKolom (inputKolom);
     		return n;
+		}else if (inputKolom == 9){
+			tampilMenu();
 		}else{
 			printf("\nERROR (INPUT POSISI KOLOM HARUS ANGKA ANTARA 1-6)\n");
 			system("pause");
@@ -1019,3 +1060,6 @@ int OlahInputKolom(int z){
 	z=z-1;
 	return z;
 }
+
+
+

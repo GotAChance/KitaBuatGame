@@ -456,7 +456,7 @@ void komputer_gerak(int ii, int jj, int k, int j, char papan[6][6]){
 void  komputer_cari_kotak_kosong(int ii, int jj, int k, int j, char papan[6][6]){
 	int random; // random menampung variabel random //
 	            // j merupakah variabel untuk menampung besarnya kolom papan //
-	k=rand()%2;
+	k=rand()%2; // untuk merandom angka, modulus 2 berarti membatasi random sampai angka 2 saja, sehingga huruf yang terbentuk nanti akan muncul antara huruf S atau O//
 	if (k==1){
 		k=83; // k variabel untuk menampung simbol S atau O //
 	}else{
@@ -491,7 +491,7 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
 				if((jj!=0) && (jj!=j-1) && (papan[ii][jj+1]=='S') && (papan[ii][jj-1] == 'S') && papan[ii][jj]==' '){
 					simbol=79; // simbol 79, isi simbol dengan huruf O //
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,simbol,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
@@ -499,7 +499,7 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
                 if ((papan[ii+1][jj] == 'S') && (papan[ii-1][jj] =='S') && papan[ii][jj]==' '){
 					simbol=79;
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,simbol,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
@@ -507,7 +507,7 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
                 if((jj!=0) && (jj!=j-1) && (papan[ii+1][jj+1] == 'S') && (papan[ii-1][jj-1] == 'S') && papan[ii][jj]==' '){
 					simbol=79;
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,simbol,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
@@ -515,7 +515,7 @@ int komputer_cari_ss(int ii,int jj,int j, char papan[6][6]){
                 if((jj!=0) && (jj!=j-1) && (papan[ii+1][jj-1] == 'S') && (papan[ii-1][jj+1] == 'S') && papan[ii][jj]==' '){
 					simbol=79;
 					papan[ii][jj]=simbol;
-					if (cekSkor(ii,jj,simbol,papan,j)>0){
+					if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 						player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 					}
 					return 1;
@@ -539,7 +539,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
 			if ((jj!=j-1) && (papan[ii][jj+1]=='O') && (papan[ii][jj+2]=='S') && papan[ii][jj]==' '){
 				simbol=83; // simbol 83, isi simbol dengan huruf S // 
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
 				return 1;
@@ -547,7 +547,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             if((jj!=0) && (papan[ii][jj-1]=='O') && (papan[ii][jj-2] == 'S') && papan[ii][jj]==' '){
             	simbol=83;
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
@@ -555,7 +555,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
         	if ((papan[ii+1][jj] == 'O') && (papan[ii+2][jj] =='S') && papan[ii][jj]==' '){
         		simbol=83;
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
 				return 1;
@@ -563,7 +563,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             if ((papan[ii-1][jj] == 'O') && (papan[ii-2][jj] =='S') && papan[ii][jj]==' '){
             	simbol=83;
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
@@ -571,7 +571,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
 			if((jj!=j-1) && (papan[ii+1][jj+1] == 'O') && (papan[ii+2][jj+2] == 'S') && papan[ii][jj]==' '){
 				simbol=83;
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
@@ -579,7 +579,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             if((jj!=0) && (papan[ii-1][jj-1] == 'O') && (papan[ii-2][jj-2] == 'S') && papan[ii][jj]==' '){
             	simbol=83;
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
@@ -587,7 +587,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             if((jj!=0) && (papan[ii+1][jj-1] == 'O') && (papan[ii+2][jj-2] == 'S') && papan[ii][jj]==' '){
             	simbol=83;
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;
@@ -595,7 +595,7 @@ int komputer_cari_os(int ii,int jj,int j, char papan[6][6]){
             if((jj!=j-1) && (papan[ii-1][jj+1] == 'O') && (papan[ii-2][jj+2] == 'S') && papan[ii][jj]==' '){
             	simbol=83;
 				papan[ii][jj]=simbol;
-				if (cekSkor(ii,jj,simbol,papan,j)>0){
+				if (cekSkor(ii,jj,simbol,papan,j)>0){ // cek terbentuknya kata SOS //
 					player2.skor = player2.skor + cekSkor (ii,jj,simbol,papan,j); // meanmbah skor player 2 //
 				}
                 return 1;

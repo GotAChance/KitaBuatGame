@@ -114,7 +114,7 @@ int main(){
 void tampilMenu(){
 	int input;
 	system("cls");
-	setwarna(15);
+	setwarna(15); // setting warna  menjadi warna default (putih) // 
 	printf("\t\t\t\t\t _______________________________________________\n");
 	printf("\t\t\t\t\t|                                               |\n");
 	printf("\t\t\t\t\t|         #######  #####  #####  #   #          |\n");
@@ -830,6 +830,7 @@ void playPlayervsPlayer(){
 
 // UI gameover //
 void gameover(){
+	setwarna(15); // set warna menjadi default (putih) //
 	system("cls");
 	printf("\t\t\t\t\t _______________________\n");
 	printf("\t\t\t\t\t|        GAME OVER      |\n");
